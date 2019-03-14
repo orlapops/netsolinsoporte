@@ -1,0 +1,72 @@
+<div class="row">
+    <kendo-dialog *ngIf="active" (close)="closeForm()" [minWidth]="250" [width]="700">
+        <kendo-dialog-titlebar>
+            {{ isNew ? 'Adicionar nueva novedad' : 'Editar novedad' }}
+        </kendo-dialog-titlebar>
+
+        <form novalidate [formGroup]="editnovForm">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label> Manejo Interno
+                                                        <kendo-switch formControlName="maninterno"
+                                                        [onLabel]="'Si'"
+                                                        [offLabel]="'No'"
+                                                        ></kendo-switch>                                                            
+                                                </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label> Cerrar
+                                                        <kendo-switch formControlName="entregado"
+                                                        [onLabel]="'Si'"
+                                                        [offLabel]="'No'"
+                                                        ></kendo-switch>                                                            
+                                                </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                                                        Etapa:
+                                                        <kendo-dropdownlist
+                                                            formControlName="etapa"
+                                                            isRequired="true"
+                                                            [data]="listetapas"
+                                                            required
+                                                        >
+                                                        </kendo-dropdownlist>
+                                                    </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label> Termino Fase
+                                                            <kendo-switch formControlName="terminaetapa"
+                                                            [onLabel]="'Si'"
+                                                            [offLabel]="'No'"
+                                                            ></kendo-switch>                                                            
+                                                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="novedad" class="control-label">Novedad</label>
+                </div>
+                <textarea rows="15" cols="130" formControlName="novedad"></textarea>
+                <div class="k-tooltip k-tooltip-validation" [hidden]="editnovForm.controls.novedad.valid || editnovForm.controls.novedad.pristine">
+                    Novedad es requerida
+                </div>
+            </div>
+        </form>
+
+        <kendo-dialog-actions>
+            <button class="k-button" (click)="onCancel($event)">Cancelar</button>
+            <button class="k-button k-primary" [disabled]="!editnovForm.valid" (click)="onSave($event)">Grabar</button>
+        </kendo-dialog-actions>
+    </kendo-dialog>
+</div>

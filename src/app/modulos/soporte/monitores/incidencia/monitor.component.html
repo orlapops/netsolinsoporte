@@ -1,0 +1,422 @@
+<!-- <div *ngIf="!vparcaptura">
+</div> -->
+<div class="alert alert-danger" *ngIf="enerror">
+    {{message}}
+</div>
+<div class="alert alert-danger" *ngIf="enlistaerror">
+    <ul>
+        <li *ngFor="let regerror of listaerrores">
+            {{regerror.menerror}}
+        </li>
+    </ul>
+</div>
+<div class="alert alert-success" *ngIf="!enerror && mostrarmensaje">
+    {{message}}
+</div>
+<!-- aqui ventanas modal para la adicion de otras tablas desde este modulo -->
+<div class="row">
+    <div class="col-md-12 col-xs-12 col-sm-6 col-lg-12 netsmonibotonmentop">
+        <h4> <strong>Monitor Caso Ticket: {{incidencia.ticket}}</strong></h4>
+    </div>
+</div>
+<div *ngIf="service.cargoparametrosb && !cargando && resultados" class="row">
+    <div class="col-md-4">
+        <!-- Widget: user widget style 1 -->
+        <div class="box box-widget widget-incidencia-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div [class]="classxestado">
+                <h3 class="widget-incidencia-username">Cliente: {{incidencia.nom_empre}}</h3>
+                <h3 class="widget-incidencia-username">Creado Por: {{incidencia.nomusuarreporta}}</h3>
+                <h4 class="widget-incidencia-username">Se presenta en: {{textproducto}}</h4>
+                <h4 class="widget-incidencia-username">Nivel Criticidad: {{textnivelcriticidad}}</h4>
+                <h4 class="widget-incidencia-username">Prioridad: {{incidencia.prioridad}}</h4>
+                <h5 class="widget-incidencia-desc">Fecha: {{incidencia.fecha.toDate() | date: 'medium' }}</h5>
+                <h5 *ngIf="!incidencia.evaluado" class="danger">No se a Evaluado.</h5>
+                <h5 *ngIf="incidencia.evaluado" class="widget-incidencia-desc">Evaluada por: {{incidencia.usuarevalua}} </h5>
+                <h5 *ngIf="incidencia.evaluado" class="widget-incidencia-desc"> Fecha: {{incidencia.fechaevalua.toDate() | date: 'medium'}} </h5>
+                <h5 *ngIf="incidencia.reportadoanetsolin" class="widget-incidencia-desc">Reporto a Netsolin: {{incidencia.usuarrepornetsolin}} </h5>
+                <h5 *ngIf="incidencia.reportadoanetsolin" class="widget-incidencia-desc"> Fecha: {{incidencia.fecharepornetsolin.toDate() | date: 'medium'}} </h5>
+                <h5 *ngIf="incidencia.solucionado && incidencia.solucionaevaluador" class="widget-incidencia-desc">Solución Interna de: {{incidencia.usuarevalua}} </h5>
+                <h5 *ngIf="incidencia.solucionado  && incidencia.solucionaevaluador" class="widget-incidencia-desc"> Fecha: {{incidencia.fechasolucionado.toDate() | date: 'medium'}} </h5>
+                <h5 *ngIf="incidencia.solucionado && incidencia.solucionetsolin" class="widget-incidencia-desc">Solución Netsolin: {{incidencia.conssoluciono}} </h5>
+                <h5 *ngIf="incidencia.solucionado  && incidencia.solucionetsolin" class="widget-incidencia-desc"> Fecha: {{incidencia.fechasolucionado.toDate() | date: 'medium'}} </h5>
+                <h5 *ngIf="incidencia.seasignocons" class="widget-incidencia-desc">Consultor Asignado: {{incidencia.consasignado}} </h5>
+                <h5 *ngIf="incidencia.seasignocons" class="widget-incidencia-desc"> Fecha: {{incidencia.fechaasignado.toDate() | date: 'medium'}} </h5>
+                <h5 *ngIf="incidencia.seasignocons && !incidencia.iniciotrabajo" class="widget-incidencia-desc bg-danger">No se ha iniciado a trabajar </h5>
+                <h5 *ngIf="incidencia.seasignocons && incidencia.iniciotrabajo" class="widget-incidencia-desc bg-danger">Inicio Trabajo: {{incidencia.fechainitrabajo.toDate() | date: 'medium'}} </h5>
+                <h3 *ngIf="incidencia.solucionado" class="widget-incidencia-desc">Cerrado por: {{incidencia.conssoluciono}} </h3>
+                <h5 *ngIf="incidencia.solucionado" class="widget-incidencia-desc"> Fecha: {{incidencia.fechasolucionado.toDate() | date: 'medium'}} </h5>
+                <h5 *ngIf="incidencia.solucionado" class="widget-incidencia-desc"> Tiempo desde reportado (horas): {{incidencia.tiemporepotacerrado | number }} </h5>
+                <h5 *ngIf="incidencia.solucionado" class="widget-incidencia-desc"> Tiempo desde inicio trabajo (horas): {{incidencia.tiempoiniacerrado | number }} </h5>
+
+            </div>
+            <div class="box-footer no-padding">
+                <div class='box-body'>
+                    <h4><span class="titulocaja">
+                                            Asunto </span></h4>
+                    <p>{{incidencia.asunto}}</p>
+                </div>
+                <div class='box-body'>
+                    <h4><span class="titulocaja">
+                                    Descripción </span></h4>
+                    <p>{{incidencia.detalle}}</p>
+                </div>
+                <div *ngIf="incidencia.solucionado" class='box-body'>
+                    <h4><span class="titulocaja">
+                                        Nota Cierre </span></h4>
+                    <p>{{incidencia.solucion}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Seguimiento</h3>
+            </div>
+            <div class="box-body">
+                <kendo-splitter-pane>
+                    <kendo-tabstrip>
+                        <kendo-tabstrip-tab [title]="'Evaluación'" [selected]="true">
+                            <ng-template kendoTabContent>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form novalidate [formGroup]="editForm">
+                                            <div class="row">
+                                                <div *ngIf="!incidencia.seasignocons " class="form-group">
+                                                    <label><h4 class="alert-danger">No se ha asignado Consultor. </h4>
+                                                                        </label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label>             
+                                                                <!-- [defaultItem]="{ id: null , nombre: 'Seleccione uno' }"  -->
+                                                                               
+                                                                        Consultor
+                                                                        <kendo-combobox 
+                                                                            [data]="service.consultores" [textField]="'nombre'" [valueField]="'nombre'" isRequired="true" 
+                                                                            formControlName="consasignado" [valuePrimitive]="true"
+                                                                            [popupSettings]="{
+                                                                            width: 350
+                                                                            }"
+                                                                        style="width: 350px;">                                      
+                                                                        </kendo-combobox>
+                                                                    </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <button *ngIf="!incidencia.solucionado" class="k-button k-primary" [disabled]="!editForm.valid" (click)="onSave($event)">Grabar</button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>                
+                                                                <!-- [defaultItem]="{ id: null , nombre: 'Seleccione uno' }"  -->
+                                                                Se presente en
+                                                        <kendo-combobox [data]="service.productosprin" [textField]="'nombre'" [valueField]="'id'" isRequired="true" 
+                                                        formControlName="productoprin" [valuePrimitive]="true">
+                                                        </kendo-combobox>
+                                                    </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            Prioridad
+                                                            <kendo-dropdownlist
+                                                                formControlName="prioridad"
+                                                                isRequired="true"
+                                                                [data]="listprioridades"
+                                                                [value]="Baja"
+                                                                required
+                                                            >
+                                                            </kendo-dropdownlist>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>                
+                                                                <!-- [defaultItem]="{ nivel: null , descripcion: 'Seleccione nivel' }"  -->
+                                                                Nivel Criticidad
+                                                        <kendo-combobox [data]="service.nivelescriticidad" [textField]="'descripcion'" [valueField]="'nivel'" isRequired="true"
+                                                         formControlName="nivelcriticidad" [valuePrimitive]="true">
+                                                        </kendo-combobox>
+                                                    </label>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!incidencia.iniciotrabajo" class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label> Inicio trabajo             
+                                                                            <kendo-switch formControlName="iniciotrabajo"
+                                                                            [onLabel]="'Si'"
+                                                                            [offLabel]="'No'"
+                                                                            ></kendo-switch>                                                            
+                                                                    </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div>
+                                                            <label for="seguimiento" class="control-label">Notas Seguimiento</label>
+                                                        </div>
+                                                        <textarea rows="15" cols="140" formControlName="seguimiento"></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div> -->
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-tabstrip-tab>
+                        <kendo-tabstrip-tab [title]="'Novedades'" [selected]="false">
+                            <ng-template kendoTabContent>
+                                <div [ngStyle]="{'background-color':'#e2eef5'}">
+                                    <h3 class="divprincipal alert-muted text-center ">
+                                        Novedades
+                                    </h3>
+                                    <div>
+                                        <kendo-grid [data]="gridDataNov" [height]="700" [pageSize]="statelog.take" [skip]="statelog.skip" [sortable]="true" [sortable]="{
+                                                allowUnsort: allowUnsort,
+                                                mode: multiple ? 'multiple' : 'single'
+                                                }" [sort]="sortlog" (sortChange)="sortChangelog($event)" [pageable]="true" [filter]="filternov" filterable="menu" (filterChange)="filterChangelog($event)" (dataStateChange)="dataStateChangelog($event)"
+                                            (edit)="editHandlerlog($event)" (remove)="removeHandlerlog($event)" (add)="addHandlerlog($event)">
+                                            <kendo-grid-messages groupPanelEmpty="Drag here to group" noRecords="No se encontraron items para mostrar." filterContainsOperator="Contiene" filterEndsWithOperator="Termina con" filterAfterOperator="es posterior" filterAfterOrEqualOperator="es posterior o igual a"
+                                                filterBeforeOperator="es anterior" filterBeforeOrEqualOperator="es anterior o igual a" filterBooleanAll="Todo" filterClearButton="Limpiar" filterEndsWithOperator="Termina con" filterEqOperator="Es igual a" filterFilterButton="Filtro"
+                                                filterGtOperator="es mayor que" filterGteOperator="es mayor o igual que" filterIsEmptyOperator="Está vacío" filterIsFalse="Falso" filterIsNotEmptyOperator="no está vacío" filterIsNotNullOperator="no es nulo"
+                                                filterIsNullOperator="es nulo" filterIsTrue="Verdadero" filterLtOperator="es menor que" filterLteOperator="es menor o igual que" filterNotContainsOperator="No contiene" filterNotEqOperator="No es igual a" filterStartsWithOperator="comienza con"
+                                                groupPanelEmpty="Gupo Vacío" NoRecords="sin registros" pagerFirstPage="Primera página" pagerLastPage="Ultima" pagerNextPage="Siguiente" pagerPreviousPage="Anterior" pagerPage="Página" pagerOf="de" pagerItems="ítems"
+                                                pagerItemsPerPage="ítems por página">
+                                            </kendo-grid-messages>
+                                            <ng-template kendoGridToolbarTemplate>
+                                                <button *ngIf="!incidencia.solucionado" kendoGridAddCommand>Adicionar Nuevo</button>
+                                            </ng-template>
+                                            <div>
+
+                                                <kendo-grid-column field="nombrereporta" title="Reporta" [sortable]="true">
+                                                    <ng-template kendoGridFilterMenuTemplate let-column="column" let-filter="filter" let-filterService="filterService">
+                                                        <multicheck-filter [isPrimitive]="true" [field]="column.field" [filterService]="filterService" [currentFilter]="filter" [data]="distinctPrimitive(column.field)"></multicheck-filter>
+                                                    </ng-template>
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        {{ dataItem.nombrereporta}}
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                                <kendo-grid-column field="fechalog" title="Fecha" format="{0:g}">
+                                                    <ng-template kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
+                                                        <date-range-filter [field]="column.field" [filter]="filter" [filterService]="filterService">
+                                                        </date-range-filter>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+
+                                                <kendo-grid-column field="seguimiento" title="Novedad" [sortable]="true">
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        {{ dataItem.seguimiento }}
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                                <kendo-grid-column field="accion" title="Acción" [sortable]="true">
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        {{ dataItem.accion }}
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                            </div>
+                                            <kendo-grid-command-column title="opción" width="120">
+                                                <ng-template kendoGridCellTemplate>
+                                                    <button *ngIf="!incidencia.solucionado" kendoGridEditCommand [primary]="true">Editar</button>
+                                                    <button *ngIf="!incidencia.solucionado" kendoGridRemoveCommand>Eliminar</button>
+                                                </ng-template>
+                                            </kendo-grid-command-column>
+                                        </kendo-grid>
+                                        <kendo-grid-editnov-form [model]="editDataItemNov" [isNew]="isNewnov" (save)="saveHandlerLog($event)" (cancel)="cancelHandlerArch()">
+                                        </kendo-grid-editnov-form>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-tabstrip-tab>
+
+                        <kendo-tabstrip-tab [title]="'Adj. Archivos'" [selected]="false">
+                            <ng-template kendoTabContent>
+                                <div [ngStyle]="{'background-color':'#e2eef5'}">
+                                    <h3 class="divprincipal alert-muted text-center ">
+                                        Archivos adjuntos
+                                    </h3>
+                                    <div>
+                                        <!-- <kendo-grid [data]="gridDataArch" [height]="500" [pageSize]="state.take" [skip]="state.skip" [sortable]="true" [pageable]="true" [filterable]="true" (dataStateChange)="dataStateChange($event)" (edit)="editClick($event)"> -->
+
+                                        <kendo-grid [data]="gridDataArch" [height]="700" [pageSize]="state.take" [skip]="state.skip" [sortable]="true" [sortable]="{
+                                            allowUnsort: allowUnsort,
+                                            mode: multiple ? 'multiple' : 'single'
+                                            }" [sort]="sort" (sortChange)="sortChange($event)" [pageable]="true" [filter]="filter" filterable="menu" (filterChange)="filterChange($event)" (dataStateChange)="dataStateChange($event)" (edit)="editHandler($event)"
+                                            (remove)="removeHandler($event)" (add)="addHandler($event)">
+                                            <kendo-grid-messages groupPanelEmpty="Drag here to group" noRecords="No se encontraron items para mostrar." filterContainsOperator="Contiene" filterEndsWithOperator="Termina con" filterAfterOperator="es posterior" filterAfterOrEqualOperator="es posterior o igual a"
+                                                filterBeforeOperator="es anterior" filterBeforeOrEqualOperator="es anterior o igual a" filterBooleanAll="Todo" filterClearButton="Limpiar" filterEndsWithOperator="Termina con" filterEqOperator="Es igual a" filterFilterButton="Filtro"
+                                                filterGtOperator="es mayor que" filterGteOperator="es mayor o igual que" filterIsEmptyOperator="Está vacío" filterIsFalse="Falso" filterIsNotEmptyOperator="no está vacío" filterIsNotNullOperator="no es nulo"
+                                                filterIsNullOperator="es nulo" filterIsTrue="Verdadero" filterLtOperator="es menor que" filterLteOperator="es menor o igual que" filterNotContainsOperator="No contiene" filterNotEqOperator="No es igual a" filterStartsWithOperator="comienza con"
+                                                groupPanelEmpty="Gupo Vacío" NoRecords="sin registros" pagerFirstPage="Primera página" pagerLastPage="Ultima" pagerNextPage="Siguiente" pagerPreviousPage="Anterior" pagerPage="Página" pagerOf="de" pagerItems="ítems"
+                                                pagerItemsPerPage="ítems por página">
+                                            </kendo-grid-messages>
+                                            <ng-template kendoGridToolbarTemplate>
+                                                <button *ngIf="!incidencia.solucionado" kendoGridAddCommand>Adicionar Nuevo</button>
+                                            </ng-template>
+                                            <div>
+
+                                                <kendo-grid-column field="usuarcrea" title="Usuario Creo" [sortable]="true">
+                                                    <ng-template kendoGridFilterMenuTemplate let-column="column" let-filter="filter" let-filterService="filterService">
+                                                        <multicheck-filter [isPrimitive]="true" [field]="column.field" [filterService]="filterService" [currentFilter]="filter" [data]="distinctPrimitive(column.field)"></multicheck-filter>
+                                                    </ng-template>
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        <!-- <a (routerLink)="retornaRutaCotiza(dataItem)">{{ dataItem.cod_dcotiz+' | '+dataItem.num_dcotiz+' Ver:'+dataItem.id_version }}</a> -->
+                                                        {{ dataItem.usuarcrea}}
+
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                                <kendo-grid-column field="fecha" format="{0:g}">
+                                                    <ng-template kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
+                                                        <date-range-filter [field]="column.field" [filter]="filter" [filterService]="filterService">
+                                                        </date-range-filter>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+
+                                                <kendo-grid-column field="nombre" title="Descripción" [sortable]="true">
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        {{ dataItem.nombre }}
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                                <kendo-grid-column field="nomarch" title="Archivo" [sortable]="true">
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        {{ dataItem.nomarch }}
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                            </div>
+                                            <kendo-grid-command-column title="opción" width="120">
+                                                <ng-template kendoGridCellTemplate>
+                                                    <!-- <button (click)="monitorClick(dataItem)" kendoGridEditCommand [primary]="true">Editar</button> -->
+                                                    <button *ngIf="!incidencia.solucionado" kendoGridEditCommand [primary]="true">Editar</button>
+                                                    <!-- <button *ngIf="!dataItem.solucionado && !dataItem.evaluado" kendoGridRemoveCommand>Eliminar</button> -->
+                                                    <button *ngIf="!incidencia.solucionado" kendoGridRemoveCommand>Eliminar</button>
+                                                </ng-template>
+                                            </kendo-grid-command-column>
+                                        </kendo-grid>
+                                        <kendo-grid-editarch-form [model]="editDataItemArch" [isNew]="isNew" (save)="saveHandlerArch($event)" (cancel)="cancelHandlerArch()">
+                                        </kendo-grid-editarch-form>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-tabstrip-tab>
+
+                        <kendo-tabstrip-tab [title]="'Ver Archivos'">
+                            <ng-template kendoTabContent>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">Archivos adjuntos</h3>
+                                        </div>
+                                        <div *ngIf="cargo_archivos" class="box-body">
+                                            <kendo-scrollview [data]="archivosincidencias" [width]="widtharchivos" [height]="heightarchivos" [arrows]="true" [pageable]="true">
+                                                <ng-template let-item="item">
+                                                    <img class="foto" src='{{item.linkarch}}' [ngStyle]="{minWidth: widthfotos}" draggable="true" />
+                                                </ng-template>
+                                            </kendo-scrollview>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-tabstrip-tab>
+                        <kendo-tabstrip-tab [title]="'Log'">
+                            <ng-template kendoTabContent>
+                                <!-- row -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- The time line -->
+                                        <ul class="timeline" *ngFor="let itemf of logincidenciasgroup; let i = index;">
+                                            <li class="time-label">
+                                                <span class="bg-yellow">
+                                                                    {{itemf.value}}
+                                                            </span>
+                                            </li>
+                                            <ul class="timeline" *ngFor="let itemfh of itemf.items; let if = index;">
+                                                <li class="timeline" *ngFor="let itemfhora of itemfh.items; let ifh = index;">
+                                                    <i *ngIf="itemfhora.regcliente" class="fa fa-user bg-aqua"></i>
+                                                    <i *ngIf="!itemfhora.regcliente && !itemfhora.maninterno" class="fa fa-user bg-blue"></i>
+                                                    <i *ngIf="!itemfhora.regcliente && itemfhora.maninterno" class="fa fa-user bg-red"></i>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fa fa-clock-o"></i> {{itemfhora.horastr}}</span>
+                                                        <h3 class="timeline-header"><strong> {{itemfhora.nombrereporta +'  '}} </strong>
+                                                            <span *ngIf="!itemfhora.soluciona" class="bg-dark"> {{itemfhora.accion}}</span>
+                                                            <span *ngIf="itemfhora.soluciona" class="bg-green"> {{itemfhora.accion +' - SOLUCIONA'}}</span>
+                                                        </h3>
+                                                        <div class="timeline-body">
+                                                            {{itemfhora.seguimiento}}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-tabstrip-tab>
+                        <kendo-tabstrip-tab [title]="'Chat'" [selected]="false">
+                            <ng-template kendoTabContent>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="box box-success">
+                                            <div class="box-header">
+                                                <i class="fa fa-comments-o"></i>
+                                                <h3 class="box-title">Chat</h3>
+                                                <!-- <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                                                    <div class="btn-group" data-toggle="btn-toggle">
+                                                        <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>
+                                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                            <div class="box-body chat" id="chat-box">
+                                                <!-- chat item -->
+                                                <div class="item" *ngFor="let itemchat of chatincidencias; let i = index;">
+                                                    <img *ngIf="itemchat.cliente" src="assets/img/avatar5.png" alt="user image" class="online">
+                                                    <img *ngIf="!itemchat.cliente" src="assets/img/logonetsolin.jpg" alt="user image" class="online">
+                                                    <p class="message">
+                                                        <a class="name">
+                                                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{itemchat.fechastr +' - ' + itemchat.horastr}}</small> {{itemchat.usuario}}
+                                                        </a>
+                                                        {{itemchat.texto}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <!-- /.chat -->
+                                            <div class="box-footer">
+                                                <div class="input-group">
+                                                    <input class="form-control" [(ngModel)]="chatmensaje" placeholder="Escriba mensaje...">
+                                                    <div class="input-group-btn">
+                                                        <button (click)="chatEnviamensaje($event)" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.box (chat box) -->
+
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-tabstrip-tab>
+                    </kendo-tabstrip>
+                </kendo-splitter-pane>
+            </div>
+        </div>
+    </div>
+    <div kendoDialogContainer></div>
+</div>

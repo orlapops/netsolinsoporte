@@ -1,0 +1,78 @@
+<soporte-busqueda ptitulo="Monitor Busquedas" *ngIf="mostmonibusquedas" (evenclose)="closebusqueda()">
+</soporte-busqueda>
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a href="#">
+                    <span>OPCIONES</span>
+                </a>
+            </li>
+            <!-- <li>
+                <a (click)="openbusqueda()">
+                    <i (click)="openbusqueda()" class="fa fa-search text-red busqueda" data-toggle="tooltip" title="Click para busquedas."></i>
+                    <span class="busqueda">Monitor Busquedas Soporte</span>
+                </a>
+            </li> -->
+
+
+        </ul>
+
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <!-- <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-table"></i> <span>Tables</span>
+                    <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Cliente Potencial</a></li>
+                    <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i>Cuentas</a></li>
+                </ul>
+            </li> -->
+
+            <li>
+                <a routerLink="/home" routerLinkActive="active">
+                    <i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <a routerLink="/monitorprinrequerimiento" routerLinkActive="active">
+                    <i class="fa fa-commenting"></i>Requerimientos</a>
+            </li>
+            <li>
+                <a routerLink="/monitorprincasosfrecuen" routerLinkActive="active">
+                    <i class="fa fa-question-circle"></i>Sol. Casos Frecuentes</a>
+            </li>
+
+            <!-- <li>
+                <a routerLink="/menutbas" routerLinkActive="active">
+                    <i class="fa fa-table"></i>Mant. Tablas</a>
+            </li> -->
+
+            <!-- <li class="active treeview">
+                <a href="#">
+                    <i class="fa fa-dashboard text-blue"></i>
+                    <span>Monitores</span>
+                    <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+                </a>
+                <ul *ngIf="cargomenumonitores" class="treeview-menu">
+                    <li *ngFor="let opmonitor of   pmenumonitores" class="active">
+                        <a href="../{{opmonitor.link}}">
+                            <div [innerHtml]="opmonitor.grafico+'   '+opmonitor.nombre"></div>
+                        </a>
+                    </li>
+                </ul>
+            </li> -->
+            <li>
+                <a href="../">ir a Netsolin
+                    </a>
+            </li>
+
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

@@ -1,0 +1,105 @@
+<!-- <div *ngIf="!vparcaptura">
+    <app-header [title]="title" [subtitle]="subtitle" [rutaListado]="retornaRuta()"> </app-header>
+</div> -->
+<div class="alert alert-danger" *ngIf="enerror">
+    {{message}}
+</div>
+<div class="alert alert-danger" *ngIf="enlistaerror">
+    <ul>
+        <li *ngFor="let regerror of listaerrores">
+            {{regerror.menerror}}
+        </li>
+    </ul>
+</div>
+<div class="alert alert-success" *ngIf="!enerror && grabo">
+    {{message}}
+</div>
+<!-- <h2>version angular {{verangular}}</h2> -->
+<div>
+    <div *ngIf="inicializado && grabando" class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset 2">
+        <div class="alert alert-warning">
+            Grabando registro....
+            <img src="assets/spinner.gif">
+        </div>
+    </div>
+
+    <div *ngIf="inicializado && !grabando" class="row">
+        <!-- <div *ngIf="inicializado" class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset 2"> -->
+        <form [formGroup]="tablaForm" (ngSubmit)="onSubmit()">
+            <!-- <div class="row"></div> -->
+            <!-- campos form :{{camposform | json}} -->
+            <div class="form-group" *ngFor="let field of camposform  let i = index; ">
+                <!-- <div class="form-group" *ngFor="let field of camposform  let i = index; let c = count;"> -->
+                <!-- field:{{field | json}} -->
+                <!-- <div *ngIf="i%2 == 0" class="row"> -->
+                <!-- se repite para manejo d e2 columnas -->
+                <div *ngIf="i%2 == 0 && field.per_adicionar" class="col-md-6 colautomat1">
+                    <label *ngIf="field.type != 'checkbox' && field.type != 'autonumber'  && field.per_adicionar" [for]="field.name" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <label *ngIf="field.type == 'checkbox' && field.type != 'autonumber'  && field.per_adicionar" [for]="field.name" class="form-check-label" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <i class="fa fa-check-circle check" *ngIf="field.type != 'checkbox' && field.type != 'autonumber' && field.per_adicionar && libmantab.conpropvalCampo(field.name,'valid',tablaForm)"></i>
+                    <i class="fa fa-exclamation-circle uncheck" *ngIf="field.type != 'checkbox' && field.type != 'autonumber' && field.per_adicionar && libmantab.conpropvalCampo(field.name,'invalid',tablaForm)"></i>
+                    <input *ngIf="field.type == 'text' && field.per_adicionar" [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="field.upper" [id]="field.name">
+                    <textarea *ngIf="field.type == 'textarea'  && field.per_adicionar" rows="5" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="field.upper" [id]="field.name"></textarea>
+                    <input *ngIf="field.type == 'number'  && field.per_adicionar" [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name">
+                    <!-- <kendo-numerictextbox *ngIf="field.type == 'number'  && field.per_adicionar" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name"  [spinners]="false" [format]="'n0'" [min]="1" [max]=[360] [step]="1" [value]="val_oferta"></kendo-numerictextbox> -->
+                    <!-- <kendo-numerictextbox *ngIf="field.type == 'number'  && field.per_adicionar" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name" [spinners]="false" [format]="'n0'" ></kendo-numerictextbox> -->
+                    <input *ngIf="field.type == 'date'  && field.per_adicionar" [type]="field.type" class="form-control date" [formControlName]="field.name" [id]="field.name">
+                    <!-- <input *ngIf="field.type == 'checkbox'  && field.per_adicionar" type="checkbox" class="form-check-input" [formControlName]="field.name" [id]="field.name" [name]="field.name" checked> -->
+                    <kendo-switch *ngIf="field.type == 'checkbox'" [formControlName]="field.name" [id]="field.name" [onLabel]="'Si'" [offLabel]="'No'"></kendo-switch>
+                    <netscombog *ngIf="field.type == 'solcombog'  && field.per_adicionar" class="solcombog" (pasarDatos)="libmantab.verCombog($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniCombog(field.name,tablaForm)}}" tablabase="{{field.combtabla}}"
+                        orden="{{field.comborden}}" filtro="*" campollave="{{field.combcllave}}">
+                    </netscombog>
+                    <netslistnum *ngIf="field.type == 'netslistnum'  && field.per_adicionar" class="solcombog" (pasarDatos)="libmantab.verListnum($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniListnum(field.name,tablaForm)}}" opciones="{{field.options}}">
+                    </netslistnum>
+                    <p class="alert alert-danger" *ngIf="libmantab.conpropvalCampo(field.name,'invalid',tablaForm) && field.per_adicionar && 
+          libmantab.conpropvalCampo(field.name,'touched',tablaForm)">
+                        {{field.mensaje_er}}
+                    </p>
+                </div>
+                <!-- </div> -->
+                <div *ngIf="i%2 != 0 && field.per_adicionar" class="col-md-6 colautomat2">
+                    <!-- Index: {{i}} Count: {{ c }} {{field.name}} -->
+                    <label *ngIf="field.type != 'checkbox' && field.type != 'autonumber'  && field.per_adicionar" [for]="field.name" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <label *ngIf="field.type == 'checkbox' && field.type != 'autonumber'  && field.per_adicionar" [for]="field.name" class="form-check-label" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <i class="fa fa-check-circle check" *ngIf="field.type != 'checkbox' && field.type != 'autonumber' && field.per_adicionar && libmantab.conpropvalCampo(field.name,'valid',tablaForm)"></i>
+                    <i class="fa fa-exclamation-circle uncheck" *ngIf="field.type != 'checkbox' && field.type != 'autonumber' && field.per_adicionar && libmantab.conpropvalCampo(field.name,'invalid',tablaForm)"></i>
+                    <input *ngIf="field.type == 'text' && field.per_adicionar" [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="field.upper" [id]="field.name">
+                    <textarea *ngIf="field.type == 'textarea'  && field.per_adicionar" rows="5" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="field.upper" [id]="field.name"></textarea>
+                    <input *ngIf="field.type == 'number'  && field.per_adicionar" [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name">
+                    <!-- <kendo-numerictextbox *ngIf="field.type == 'number'  && field.per_adicionar" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name"  [spinners]="false" [format]="'n0'" [min]="1" [max]=[360] [step]="1" [value]="val_oferta"></kendo-numerictextbox> -->
+                    <!-- <kendo-numerictextbox *ngIf="field.type == 'number'  && field.per_adicionar" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name" [spinners]="false" [format]="'n0'" ></kendo-numerictextbox> -->
+                    <input *ngIf="field.type == 'date'  && field.per_adicionar" [type]="field.type" class="form-control date" [formControlName]="field.name" [id]="field.name">
+                    <!-- <input *ngIf="field.type == 'checkbox'  && field.per_adicionar" type="checkbox" class="form-check-input" [formControlName]="field.name" [id]="field.name" [name]="field.name" checked> -->
+                    <kendo-switch *ngIf="field.type == 'checkbox'" [formControlName]="field.name" [id]="field.name" [onLabel]="'Si'" [offLabel]="'No'"></kendo-switch>
+                    <netscombog *ngIf="field.type == 'solcombog'  && field.per_adicionar" class="solcombog" (pasarDatos)="libmantab.verCombog($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniCombog(field.name,tablaForm)}}" tablabase="{{field.combtabla}}"
+                        orden="{{field.comborden}}" filtro="*" campollave="{{field.combcllave}}">
+                    </netscombog>
+                    <netslistnum *ngIf="field.type == 'netslistnum'  && field.per_adicionar" class="solcombog" (pasarDatos)="libmantab.verListnum($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniListnum(field.name,tablaForm)}}" opciones="{{field.options}}">
+                    </netslistnum>
+                    <p class="alert alert-danger" *ngIf="libmantab.conpropvalCampo(field.name,'invalid',tablaForm) && field.per_adicionar && 
+              libmantab.conpropvalCampo(field.name,'touched',tablaForm)">
+                        {{field.mensaje_er}}
+                    </p>
+                    <div class="clearfix"></div>
+                    <!-- <br> -->
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-5">
+                    <button type="submit" class="btn btn-primary" [disabled]="!tablaForm.valid">Adicionar Registro</button>
+                </div>
+                <div class="col-md-5" *ngIf="!vparcaptura">
+                    <a *ngIf="!vparcaptura" class="btn btn-danger" [routerLink]="[retornaRuta()]">Cancelar</a>
+                </div>
+            </div>
+            <p class="alert alert-warning" *ngIf="!tablaForm.valid">
+                Por favor complete todos los campos
+            </p>
+        </form>
+        <hr>
+    </div>
+</div>
+<!-- {{tablaForm.value | json}} -->

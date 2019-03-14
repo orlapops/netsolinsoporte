@@ -1,0 +1,20 @@
+<div class="input-group">
+    <kendo-combobox #combog name="combog" [data]="view | async" [(ngModel)]="campvalor" [valueField]="'id'" [value]="valini" [textField]="'text'" [filterable]="true" [valuePrimitive]="true" [disabled]="esdisabled" (valueChange)="valueChange($event,combog)"
+        (filterChange)="handleFilter($event,combog)" (selectionChange)="selectionChange($event,combog)" (open)="open(combog)" (close)="close(combog)" (focus)="focus(combog)" (blur)="blur(combog)">
+        <ng-template kendoComboBoxItemTemplate let-dataItem>
+            <kbd class="template">{{ dataItem.id }}</kbd> {{' '+ dataItem.text }}
+        </ng-template>
+        <ng-template kendoDropDownListNoDataTemplate>
+            <h6>
+                <span class="k-icon k-i-warning"></span>
+                <br />
+                <br /> No hay datos.
+                <br>Para busqueda: Digite cadena a buscar seguida de *
+                <br>Para traer todos * (Puede demorar)
+                <ng-template kendoDropDownListNoDataTemplate>
+                </ng-template>
+            </h6>
+        </ng-template>
+
+    </kendo-combobox>
+</div>

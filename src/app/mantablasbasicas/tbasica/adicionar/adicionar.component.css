@@ -1,0 +1,47 @@
+input.ng-invalid.ng-touched {
+    border-left: 5px solid #a94442;
+}
+
+input.ng-valid.ng-dirty {
+    border-left: 5px solid #42A948;
+}
+
+.select.ng-invalid.ng-touched {
+    border-left: 5px solid #a94442;
+}
+
+.select.ng-valid.ng-dirty {
+    border-left: 5px solid #42A948;
+}
+
+.solcombog.ng-invalid.ng-touched {
+    border-left: 5px solid #a94442;
+}
+
+.solcombog.ng-valid.ng-dirty {
+    border-left: 5px solid #42A948;
+}
+
+.check {
+    color: #42A948;
+}
+
+.uncheck {
+    color: #a94442;
+}
+
+.date {
+    width: 280px;
+}
+
+.colautomat1 {
+    width: 45%;
+    /* float: left; */
+    /* background-color: red */
+}
+
+.colautomat2 {
+    width: 45%;
+    /* float: left; */
+    /* background-color: blue */
+}

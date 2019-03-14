@@ -1,0 +1,27 @@
+<!-- ============================================================== -->
+<div *ngIf="vglobal.mostrarbreadcrumbs" class="row page-titles">
+    <!-- <div *ngIf="!vglobal.cargandocomponente" class="row page-titles"> -->
+    <div class="col-md-5 align-self-center">
+        <!-- <h3 class="text-themecolor"> {{ label }}</h3> -->
+        <h4 class="text-themecolor">{{ vglobal.titulopag }}</h4>
+
+
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/home" routerLinkActive="active">Home</a>
+            </li>
+            <li *ngIf="vglobal.rutaanterior" class="breadcrumb-item">
+                <a routerLink="{{vglobal.rutaanterior}}">
+                    {{vglobal.titrutaanterior}}</a>
+            </li>
+
+            <!-- <li class="breadcrumb-item active"> {{ vglobal.titulopag }}</li> -->
+        </ol>
+    </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->

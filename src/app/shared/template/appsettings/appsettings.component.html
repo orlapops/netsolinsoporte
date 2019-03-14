@@ -1,0 +1,120 @@
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Create the tabs -->
+  <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+    <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+    <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+  </ul>
+  <!-- Tab panes -->
+  <div *ngIf="cargoini"  class="tab-content">
+    <!-- Home tab content -->
+    <div class="tab-pane" id="control-sidebar-home-tab">
+      <ul class="control-sidebar-menu">
+        <li>
+          <a  target="_blank" href="documenta/index.html">
+            <i class="menu-icon fa fa-question bg-yellow"></i>
+
+            <div class="menu-info">
+              <h4 class="control-sidebar-subheading">Documentación</h4>
+              <p>Encuentre ayuda y documentación.</p>
+            </div>
+          </a>
+        </li>
+        </ul>
+        <h3 class="control-sidebar-heading">Mensajes y Solicitudes</h3>
+        <ul class="control-sidebar-menu">
+        <li>
+          <a href='javascript:show_dialogo_con("../EjeConsultaLis.wss?VRCod_obj=MONCSOLICITUD&VCAMPO=&VCONDI=Especial&VRPLINKXML=N&VTEXTO=PVXISOLICITUD=[],PVXITIPO=[]","Crear Solicitud","700px","100%",true)'>
+            <i class="menu-icon fa fa-commenting-o bg-red"></i>
+
+            <div class="menu-info">
+              <h4 class="control-sidebar-subheading">Crear Solicitud Interna</h4>
+
+              <p>Cree solicitudes (tarea) a otros usuarios</p>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a href='javascript:show_dialogo_con("../EjeConsultaLis.wss?VRCod_obj=MONNSCCRESOLI&VCAMPO=&VCONDI=Especial&VRPLINKXML=N&VTEXTO=PVXISOLICITUD=[],PVXITIPO=[]","Crear Solicitud","700px","100%",true)'>
+            <i class="menu-icon fa fa-envelope bg-blue"></i>
+
+            <div class="menu-info">
+              <h4 class="control-sidebar-subheading">Registrar Mensaje</h4>
+
+              <p>Envie un mesaje a otro usuario</p>
+            </div>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+    <!-- /.tab-pane -->
+
+    <!-- Settings panel administrador -->
+    <div *ngIf="cargoini"  class="tab-pane" id="control-sidebar-settings-tab">
+        <h3 class="control-sidebar-heading">Panel Administrador</h3>
+        <ul class="control-sidebar-menu">
+        <li>
+          <a href='javascript:show_dialogo_con("../EjeConsultaLis.wss?VRCod_obj=SEGURIDADOBJ&VCAMPO=&VCONDI=Especial&VRPLINKXML=N&VTEXTO=PVXICOD_OBJ=[],PVXITIPO=[]","Seguridad","700px","100%",true)'>
+          <!-- <a href="{{linksegobj}}"> -->
+            <i class="menu-icon fa fa-unlock-alt bg-blue"></i>
+
+            <div class="menu-info">
+              <h4 class="control-sidebar-subheading">Seguridad Objeto</h4>
+
+              <p>Asigne seguridad al objeto actual</p>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a href="../EjeConsultaLis.wss?VRCod_obj=EDITAROBJETO&VCAMPO=&VCONDI=Especial&VRPLINKXML=N&VTEXTO=PVXICOD_OBJ='{{objoapp.obj_actual}}',PVXITIPOG=''">
+            <i class="menu-icon fa fa-cog bg-red"></i>
+
+            <div class="menu-info">
+              <h4 class="control-sidebar-subheading">Editar Objeto</h4>
+
+              <p>Modifica Objeto Actual (Solo Expertos)</p>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a href="../EjeConsultaLis.wss?VRCod_obj=SEGURIDADRELBOD&VCAMPO=&VCONDI=Especial&VRPLINKXML=N&VTEXTO=PVXICOD_OBJ='{{objoapp.obj_actual}}',PVXITIPOG=''">
+            <i class="menu-icon fa fa-unlock-alt bg-green"></i>
+
+            <div class="menu-info">
+              <h4 class="control-sidebar-subheading">Seguridad por documento</h4>
+
+              <p>Asigne seguridad a un tipo de documento</p>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a href="../EjeConsultaLis.wss?VRCod_obj=SEGURIDADRELBOD&VCAMPO=&VCONDI=Especial&VRPLINKXML=N&VTEXTO=PVXICOD_OBJ='{{objoapp.obj_actual}}',PVXITIPOG=''">
+            <i class="menu-icon fa fa-unlock-alt bg-red"></i>
+
+            <div class="menu-info">
+              <h4 class="control-sidebar-subheading">Seguridad por bodega</h4>
+
+              <p>Asigne seguridad a una bodega</p>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="../EjeConsultaLis.wss?VRCod_obj=MONICONLOGSE&VCAMPO=*E*&VCONDI=Especial&VTEXTO=PVXITAB_TIPO='LOG'">
+            <i class="menu-icon fa fa-calendar bg-yellow"></i>
+
+            <div class="menu-info">
+              <h4 class="control-sidebar-subheading">Tareas Programadas</h4>
+
+              <p>Administrar tareas programadas</p>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- /.tab-pane -->
+  </div>
+</aside>

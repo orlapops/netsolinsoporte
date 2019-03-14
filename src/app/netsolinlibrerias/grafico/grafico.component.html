@@ -1,0 +1,138 @@
+<div *ngIf="!inicializado" class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset 2">
+    <div class="alert alert-warning">
+        Cargando grafica....
+        <img src="assets/spinner.gif">
+    </div>
+</div>
+
+
+<div class="row" *ngIf="inicializado">
+    <div class="col-sm-2">
+        <div class="example-config">
+            <label for="btipograf">Tipo Grafico</label>
+            <select id="btipograf" [(ngModel)]="tipografico">
+                      <option value="line" selected>Lineas</option>
+                      <option value="area">Area</option>
+                      <option value="bar">Barras</option>
+                      <option value="donut">Dona</option>
+                      <option value="pie">Pie</option>
+                    </select>
+        </div>
+    </div>
+    {{titulo}}
+    <!--<div class="col-sm-3">
+         <label for="mescheck" class="form-check-label" data-toggle="tooltip" title="mes o año">Dia
+         <input type="checkbox" ng-model="mes" ng-init="mes = true">
+        </label>
+        
+        </div>-->
+
+    <div class="col-sm-3">
+        <label for="ngmcod_forma" data-toggle="tooltip" title="Seleccione opción">{{titopciones}} : </label>
+        <kendo-dropdownlist [defaultItem]="Itemopciones" [data]="listaopciones" textField="opcion" valueField="id" [(ngModel)]="selectedopcion" (valueChange)="handleOpcionChange($event)">
+        </kendo-dropdownlist>
+
+    </div>
+
+    <div class="col-sm-3">
+        <label for="ngmcod_forma" data-toggle="tooltip" title="Seleccione opción">{{titopciones2}} : </label>
+        <kendo-dropdownlist [defaultItem]="Itemopciones" [data]="listaopciones2" textField="opcion" valueField="id" [(ngModel)]="selectedopcion2" (valueChange)="handleOpcion2Change($event)">
+        </kendo-dropdownlist>
+    </div>
+</div>
+
+<kendo-splitter-pane *ngIf="inicializado">
+    <kendo-tabstrip>
+        <kendo-tabstrip-tab [title]="'Grafica'" [selected]="true">
+            <ng-template kendoTabContent>
+                <!-- [style]="style" -->
+                <kendo-chart [transitions]="showTransitions" [style]="style">
+                    <kendo-chart-title [text]="titulo" color="blue" background="white" font="19pt sans-serif">
+                    </kendo-chart-title>
+                    <!-- <kendo-chart-title [text]="titulo"></kendo-chart-title> -->
+                    <kendo-chart-legend [visible]="leyendavisible"></kendo-chart-legend>
+                    <kendo-chart-area [background]="backgroundcolor"></kendo-chart-area>
+                    <kendo-chart-axis-defaults>
+                        <kendo-chart-axis-defaults-labels [format]="formatoxy">
+                        </kendo-chart-axis-defaults-labels>
+                    </kendo-chart-axis-defaults>
+                    <kendo-chart-tooltip [shared]="true">
+                        <ng-template *ngIf="formatoserie==='M'" kendoChartSeriesTooltipTemplate let-value="value" let-category="category" let-series="series">
+                            {{ category }} ({{ series.name }}): {{ value |currency: ' ':'symbol' | Moneda: '$':20}}
+                            <!-- {{ category }} ({{ series.name }}): {{ value | Moneda: '$':20}} -->
+                        </ng-template>
+                        <ng-template *ngIf="formatoserie !='M'" kendoChartSeriesTooltipTemplate let-value="value" let-category="category" let-series="series">
+                            {{ category }} ({{ series.name }}):mm {{ value }}
+                        </ng-template>
+
+                    </kendo-chart-tooltip>
+                    <!-- <kendo-chart-series *ngIf="tipografico==='pie'">
+                        <kendo-chart-series-item [type]="tipografico" [name]="objretornado.serie1.name" [data]="modelgrafserie1" field="value" categoryField="category" colorField="color">
+                        </kendo-chart-series-item>
+                    </kendo-chart-series> -->
+                    <kendo-chart-series *ngIf="tipografico==='line'">
+                        <!-- <kendo-chart-series-item [type]="tipografico" [name]="modelgrafserie1.name" [data]="modelgrafserie1.data" field="value" categoryField="category" colorField="color"> -->
+                        <kendo-chart-series-item [type]="tipografico" [name]="objretornado.serie1.name" [data]="modelgrafserie1" field="value" categoryField="category" colorField="color">
+                        </kendo-chart-series-item>
+                        <kendo-chart-series-item [type]="tipografico" [name]="objretornado.serie2.name" [data]="modelgrafserie2" field="value" categoryField="category" colorField="color">
+                        </kendo-chart-series-item>
+                    </kendo-chart-series>
+                    <kendo-chart-series *ngIf="tipografico==='area'">
+                        <kendo-chart-series-item type="area" [name]="objretornado.serie1.name" [data]="modelgrafserie1" field="value" categoryField="category" colorField="red">
+                        </kendo-chart-series-item>
+                        <kendo-chart-series-item type="area" [name]="objretornado.serie2.name" [data]="modelgrafserie2" field="value" categoryField="category" colorField="blue">
+                        </kendo-chart-series-item>
+                    </kendo-chart-series>
+
+                    <kendo-chart-series *ngIf="tipografico==='bar'">
+                        <kendo-chart-series-item type="column" [gap]="2" [name]="objretornado.serie1.name" [data]="modelgrafserie1" field="value" categoryField="category" colorField="red">
+                        </kendo-chart-series-item>
+                        <kendo-chart-series-item type="column" [name]="objretornado.serie2.name" [data]="modelgrafserie2" field="value" categoryField="category" colorField="blue">
+                        </kendo-chart-series-item>
+                    </kendo-chart-series>
+                    <kendo-chart-series *ngIf="tipografico==='donut'">
+                        <!-- <kendo-chart-series-item [type]="tipografico" [name]="modelgrafserie1.name" [data]="modelgrafserie1.data" field="value" categoryField="category" colorField="color"> -->
+                        <kendo-chart-series-item [type]="tipografico" [startAngle]="150" [name]="objretornado.serie1.name" [data]="modelgrafserie1" field="value" categoryField="category" colorField="">
+                        </kendo-chart-series-item>
+                        <kendo-chart-series-item [type]="tipografico" [startAngle]="150" [name]="objretornado.serie2.name" [data]="modelgrafserie2" field="value" categoryField="category" colorField="">
+                            <kendo-chart-series-item-labels position="outsideEnd" background="none" [content]="labelContent">
+                            </kendo-chart-series-item-labels>
+                        </kendo-chart-series-item>
+                    </kendo-chart-series>
+
+                    <kendo-chart-series *ngIf="tipografico==='pie'">
+                        <kendo-chart-series-item type="pie" [name]="objretornado.serie2.name" [data]="modelgrafserie1" field="value" categoryField="category" colorField="">
+                            <kendo-chart-series-item-labels position="outsideEnd" background="none" [content]="labelContent">
+                            </kendo-chart-series-item-labels>
+                        </kendo-chart-series-item>
+                        <!-- <kendo-chart-series-item type="pie"  [name]="objretornado.serie2.name" [data]="modelgrafserie2" field="value" categoryField="category" colorField="">
+                        </kendo-chart-series-item> -->
+                    </kendo-chart-series>
+
+
+                    <!-- <kendo-chart-series>
+                        <kendo-chart-series-item *ngFor="let series of modelgrafico; let outermost = last;" [type]="tipografico" [startAngle]="150" [name]="series.name" [data]="series.data" field="value" categoryField="category" colorField="color">
+                            <kendo-chart-series-item-labels *ngIf="outermost" position="outsideEnd" background="none" [content]="labelContent">
+                            </kendo-chart-series-item-labels>
+                        </kendo-chart-series-item>
+                    </kendo-chart-series> -->
+                </kendo-chart>
+            </ng-template>
+        </kendo-tabstrip-tab>
+        <kendo-tabstrip-tab [title]="'Datos'" [selected]="false">
+            <ng-template kendoTabContent>
+                <div *ngIf="resultados">
+                    <kendo-grid [data]="modeldatos" [pageable]="false">
+                        <ng-template kendoGridToolbarTemplate>
+                            <div align="right">
+                                <a href="{{linkexcel}}" data-toggle="tooltip" title="Exporta Excel"> <i aria-hidden="true" class="fa fa-file-excel-o" style="color:green;font-size:20px"></i> </a>
+                            </div>
+                            <!-- <button type="button" kendoGridExcelCommand icon="fa-file-excel-o">Export to Excel</button> -->
+                        </ng-template>
+                    </kendo-grid>
+                </div>
+
+            </ng-template>
+        </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+</kendo-splitter-pane>

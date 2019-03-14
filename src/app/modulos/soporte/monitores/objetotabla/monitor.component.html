@@ -1,0 +1,49 @@
+<div class="alert alert-danger" *ngIf="enerror">
+    {{message}}
+</div>
+<div class="alert alert-danger" *ngIf="enlistaerror">
+    <ul>
+        <li *ngFor="let regerror of listaerrores">
+            {{regerror.menerror}}
+        </li>
+    </ul>
+</div>
+<div class="alert alert-success" *ngIf="!enerror && mostrarmensaje">
+    {{message}}
+</div>
+<!-- aqui ventanas modal para la adicion de otras tablas desde este modulo -->
+<!-- <mant-cliepoten ptitulo="Consultar Cliente potencial." *ngIf="consultacliepoten" (evenclose)="closeconsulta('cliepoten')" pvaparam="VPARCLIENPOTEN" pobjeto="CRMCLIENTECP01" ptipomant="C" [pid]="id_cliepoten"></mant-cliepoten> -->
+<div *ngIf="resultados" class="row">
+    <!-- <div class="row"> -->
+    <div class="row">
+        <!-- TABLE: LATEST ORDERS -->
+        <div *ngIf="!esconder" class="box box-{{color}}">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{titulo}}</h3>
+                <div class="box-tools pull-right">
+                    <button *ngIf="collapse" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse()"><i class="fa fa-plus"></i></button>
+                    <button *ngIf="!collapse" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse()"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove" (click)="esconderpanel()"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div *ngIf="!collapse && !cargoobjeto" class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+
+            <div *ngIf="!collapse && cargoobjeto" class="box-body">
+                <!-- Este es html seguro -->
+                <div [innerHtml]="safeHtml"></div>
+                <!-- Este es html -->
+                <!-- <div [innerHtml]="regResultobj.html"></div> -->
+                <!-- este otro solo {{regResultobj.html}} -->
+            </div>
+            <!-- /.box-body -->
+            <!-- <div *ngIf="collapse" class="box-footer clearfix">
+            </div> -->
+            <!-- /.box-footer -->
+        </div>
+        <!-- /.box -->
+
+    </div>
+</div>

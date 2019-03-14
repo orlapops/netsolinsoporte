@@ -1,0 +1,48 @@
+<!-- Asyncronico comobo -->
+<div *ngIf="cargando" class="text-center" style="padding-top: 60px;">
+    <img src="assets/spinner.gif">
+</div>
+<div *ngIf="resultados">
+
+    <!-- <h1>Asyncronico combo</h1>
+        <kendo-autocomplete [data]="adatossolcombog" 
+        [valueField]="'id'" 
+        [filterable]="true"
+        [value]="valini"
+        (valueChange)="valueChange($event)"
+        (filterChange)="filterChange($event)"
+        (open)="open()"
+        (close)="close()"
+        (focus)="focus()"
+        (blur)="blur()"
+        >        
+  </kendo-autocomplete>
+  <event-log title="Event log" [events]="events">
+    </event-log>
+  formControlName="formcontrolname"
+
+    <p>Combobox Kendo</p>     -->
+    <!-- (toogle)="toggle($event)"  -->
+    <!-- (open)="open($event,combog)" (close)="close($event,combog)" -->
+    <kendo-combobox #ncombog [data]="adatossolcombog" [suggest]="true" [filterable]="true" [valueField]="'id'" [value]="valini" [textField]="'text'" [disabled]="esdisabled" [valuePrimitive]="true" (valueChange)="valueChange($event)" (selectionChange)="selectionChange($event)"
+        (filterChange)="filterChange($event,ncombog)" (focus)="focus()" (blur)="blur()">
+
+        <ng-template kendoComboBoxItemTemplate let-dataItem>
+            <kbd class="template">{{ dataItem.id }}</kbd> {{' '+ dataItem.text }}
+        </ng-template>
+        <ng-template kendoDropDownListNoDataTemplate>
+            <h6>
+                <span class="k-icon k-i-warning"></span>
+                <br />
+                <br /> No hay datos.
+                <br>Para busqueda: Digite cadena a buscar seguida de *
+                <br>Para traer todos * (Puede demorar)
+                <ng-template kendoDropDownListNoDataTemplate>
+                </ng-template>
+            </h6>
+        </ng-template>
+    </kendo-combobox>
+    <!-- <event-log title="Event log" [events]="events">
+  formControlName="nomcontrol" 
+</event-log> -->
+</div>

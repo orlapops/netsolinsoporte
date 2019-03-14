@@ -1,0 +1,30 @@
+
+/* .labelinfotit {
+    font-weight: normal;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 18px;
+    color: #90949c;
+    margin-right: 18px;
+    width: 180px;
+    text-align: left;
+    word-wrap: break-word;
+} */
+
+.labelinfoval {
+    font-family: inherit;
+    text-align: -webkit-match-parent;
+    text-decoration: none;
+}
+
+label {
+    font-size: 14px;
+    line-height: 18px;
+    color: #90949c;
+    margin-right: 18px;
+    font-weight: bold;
+    display: block;
+    width: 180px;
+    float: left;
+    }
+label:after { content: ": " }

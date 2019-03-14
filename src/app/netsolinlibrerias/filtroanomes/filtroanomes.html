@@ -1,0 +1,28 @@
+<div *ngIf="!inicializado" class="container">
+    <div class="alert alert-warning">
+        Cargando Fecha....
+        <img src="assets/spinner.gif">
+    </div>
+</div>
+
+<div class="row" *ngIf="inicializado">
+    <div class="container jm_container">
+        <div class="row">
+            <div class="col-sm-6">
+            </div>
+
+            <div class="col-sm-3" *ngIf="filtrames">
+                <label for="ngmcod_forma" data-toggle="tooltip" title="Seleccione mes">Mes : </label>
+                <kendo-dropdownlist [defaultItem]="Item_mes" [data]="lista_mes" textField="opcion" valueField="id" [(ngModel)]="selectedmes" (valueChange)="handleMesChange($event)">
+                </kendo-dropdownlist>
+            </div>
+
+            <div class="col-sm-3" *ngIf="filtraano">
+                <label for="ngmcod_forma1" data-toggle="tooltip" title="Seleccione Año">Año : </label>
+                <kendo-dropdownlist [defaultItem]="Item_ano" [data]="lista_ano" textField="opcion" valueField="id" [(ngModel)]="selectedano" (valueChange)="handleAnoChange($event)">
+                </kendo-dropdownlist>
+            </div>
+
+        </div>
+    </div>
+</div>

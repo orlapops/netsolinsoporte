@@ -1,0 +1,181 @@
+input[type=text] {
+    width: 100%;
+}
+
+input[type=textarea] {
+    width: 100%;
+}
+
+.direct-visita-timestamp {
+    color: rgb(61, 60, 60);
+    font-weight: 300;
+}
+
+.direct-act-info {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+
+.direct-act-name {
+    font-weight: 600;
+}
+
+.direct-act-timestamp {
+    color: #999;
+}
+
+.products-list .product-info {
+    margin-left: 60px;
+}
+
+.text-notas {
+    margin-left: 15px;
+    color: #999;
+}
+
+.colrefer {
+    width: 80px;
+}
+
+.coldescri {
+    width: 480px;
+}
+
+.colcant {
+    width: 50px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.colvalor {
+    width: 90px;
+    text-align: right;
+}
+
+.tabla {
+    margin-left: 15px;
+}
+
+.filatabla {
+    margin-left: 15px;
+}
+
+.products-list .product-title {
+    font-weight: 600;
+}
+
+.products-list .product-description {
+    display: block;
+    color: #999;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.product-list-in-box>.item {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.product-list-in-box>.item:last-of-type {
+    border-bottom-width: 0;
+}
+
+
+/*
+ * Component: Social Widgets
+ * -------------------------
+ */
+
+.titulocaja {
+    color: #444;
+    display: block;
+    font-weight: 600;
+}
+
+.box-widget {
+    border: none;
+    position: relative;
+}
+
+.widget-user .widget-visita-header {
+    padding: 20px;
+    height: 120px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.widget-user .widget-visita-username {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 15px;
+    margin-right: -10px;
+    font-weight: 300;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.widget-user .widget-visita-desc {
+    margin-top: 0;
+}
+
+.widget-user .widget-visita-image {
+    position: absolute;
+    top: 65px;
+    left: 50%;
+    margin-left: -45px;
+}
+
+.widget-user .widget-visita-image>img {
+    width: 90px;
+    height: auto;
+    border: 3px solid #fff;
+}
+
+.k-scrollview>img {
+    border: 0;
+    width: inherit;
+    height: inherit;
+}
+
+.foto {
+    border: 0;
+    width: inherit;
+    height: inherit;
+}
+
+.widget-user .box-footer {
+    padding-top: 30px;
+}
+
+.widget-visita-2 .widget-visita-header {
+    padding: 20px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.widget-visita-2 .widget-visita-username {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.widget-visita-2 .widget-visita-desc {
+    margin-top: 0;
+    font-size: 12px;
+}
+
+.widget-visita-2 .widget-visita-username,
+.widget-visita-2 .widget-visita-desc {
+    margin-left: 75px;
+}
+
+.widget-visita-2 .widget-visita-image>img {
+    width: 85px;
+    height: 90px;
+    float: left;
+    margin-left: -18px;
+}

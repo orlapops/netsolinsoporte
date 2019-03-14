@@ -1,0 +1,73 @@
+<div class="alert alert-warning" role="alert">
+    <h4><strong>Mantenimiento Tablas Basicas!</strong> </h4>
+    Realize operaciones (Adición, Modificación, Eliminación, Listado) de las tablas basicas para el correcto funcionamiento de Netsolin.
+    <!-- <br>Seleccione el Modulo y luego la tabla a la que desea hacerle mantenimiento. -->
+</div>
+<div class="alert alert-danger" *ngIf="enerror">
+    {{message}}
+</div>
+
+<!-- <a routerLink="mantbasica/GT0201VU0F0RCN0W"  routerLinkActive="active">Comprobantes</a> -->
+<!-- <a [routerLink]="mantbasica/GT0201VU0F0RCN0W">Comprobantes 2 </a> -->
+<div class="row">
+    <div *ngIf="resultadosmod" class="col-md-6">
+        <label for="listmodulos">Modulo </label>
+        <!-- <netslistnum  
+id="listmodulos"
+class="solcombog" 
+(pasarDatos)="verListnum($event)"
+valini="{{netsmoduluact}}" 
+opciones="{{netsmodulos}}"
+>
+</netslistnum> -->
+    </div>
+</div>
+<div class="row">
+    <div *ngIf="resultados" class="col-md-6 box-body">
+        <div class="box box-primary box-header with-border">
+            <h3 class="box-title">Predefinidas</h3>
+            <ul class="menuts-list menut-list-in-box">
+                <li *ngFor="let regmenu of aregsmenu" class="list-group-item" routerLinkActive="active">
+
+                    <div class="menut-img">
+                        <!-- <i class="fa fa-table"></i> -->
+                        <i class="{{regmenu.grafico}}"></i>
+                    </div>
+                    <div class="menut-info">
+                        <a [routerLink]="[regmenu.link]" class="menut-title">
+                            <strong> {{regmenu.nombre}}  </strong>
+                        </a>
+                        <span class="menut-description">
+                  {{regmenu.descrip}}
+                  </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- aregmenu:    {{aregsmenu | json}} -->
+    <div *ngIf="resultadostu" class="col-md-6 box-body">
+        <div class="box box-danger box-header with-border">
+            <h3 class="box-title">Usuario</h3>
+            <ul class="menuts-list menut-list-in-box">
+                <li *ngFor="let regmenutu of aregsmenutu" class="list-group-item" routerLinkActive="active">
+
+                    <div class="menut-img">
+                        <!-- <i class="fa fa-table"></i> -->
+                        <i class="{{regmenutu.grafico}}"></i>
+                    </div>
+                    <div class="menut-info">
+                        <a [routerLink]="[regmenutu.link]" class="menut-title">
+                            <strong> {{regmenutu.nombre}}  </strong>
+                        </a>
+                        <span class="menut-description">
+                    {{regmenutu.descrip}}
+                    </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- aregmenu:    {{aregsmenu | json}} -->
+
+</div>

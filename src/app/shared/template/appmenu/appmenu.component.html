@@ -1,0 +1,47 @@
+<!-- <soporte-busqueda ptitulo="Monitor Busquedas" *ngIf="mostmonibusquedas" (evenclose)="closebusqueda()"></soporte-busqueda> -->
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a href="#">
+                    <span>OPCIONES</span>
+                </a>
+            </li>
+            <li>
+                <!-- <a href='javascript:show_dialogo_con("../EjeConsultaLis.wss?VRCod_obj=MONIBUSQCRM&VCAMPO=&VCONDI=Especial&VRPLINKXML=N&VTEXTO=","Busqueda","700px","100%",true)'> -->
+                <a (click)="openbusqueda()">
+                    <i (click)="openbusqueda()" class="fa fa-search text-red" data-toggle="tooltip" title="Click para busquedas."></i>
+                    <span>Monitor Busquedas</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li>
+                <a routerLink="" routerLinkActive="active">
+                    <i class="fa fa-table"></i>Mant. Tablas</a>
+            </li>
+            <li class="active treeview">
+                <a href="#">
+                    <i class="fa fa-dashboard text-blue"></i>
+                    <span>Monitores</span>
+                    <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+                </a>
+                <ul *ngIf="cargomenumonitores" class="treeview-menu">
+                    <li *ngFor="let opmonitor of   pmenumonitores" class="active">
+                        <a href="../{{opmonitor.link}}">
+                            <!-- <i class="{{opmonitor.grafico}}"></i> -->
+                            <div [innerHtml]="opmonitor.grafico+'   '+opmonitor.nombre"></div>
+                            <!-- <i class="{{opmonitor.grafico}}"></i> -->
+
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

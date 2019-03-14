@@ -3,17 +3,15 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "netsolincrm": {
+    "soporte": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "app",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/netsolincrm",
+            "outputPath": "dist/soporte",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,7 +21,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -50,18 +51,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "netsolincrm:build"
+            "browserTarget": "soporte:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "netsolincrm:build:production"
+              "browserTarget": "soporte:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "netsolincrm:build"
+            "browserTarget": "soporte:build"
           }
         },
         "test": {
@@ -72,7 +73,10 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
+              "src/styles.scss"
             ],
             "scripts": [],
             "assets": [
@@ -95,7 +99,7 @@
         }
       }
     },
-    "netsolincrm-e2e": {
+    "soporte-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +107,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "netsolincrm:serve"
+            "devServerTarget": "soporte:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "netsolincrm:serve:production"
+              "devServerTarget": "soporte:serve:production"
             }
           }
         },
@@ -123,5 +127,14 @@
       }
     }
   },
-  "defaultProject": "netsolincrm"
+  "defaultProject": "soporte",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "app",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
 }

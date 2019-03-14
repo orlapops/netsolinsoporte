@@ -1,0 +1,179 @@
+<!-- <kendo-splitter-pane> -->
+<!-- <kendo-tabstrip [ngStyle]="{'width': '400px'}">
+    <kendo-tabstrip-tab [title]="'Información'" [selected]="true">
+        <ng-template kendoTabContent> -->
+<div class="row">
+    <kendo-dialog *ngIf="active" (close)="closeForm()" [minWidth]="450" [width]="800">
+        <kendo-dialog-titlebar>
+            {{ isNew ? 'Adicionar nuevo' : 'Editar' }}
+        </kendo-dialog-titlebar>
+
+        <form novalidate [formGroup]="editForm">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                                    Tipo
+                                    <kendo-dropdownlist
+                                        formControlName="tipo"
+                                        isRequired="true"
+                                        [data]="listtipos"
+                                        [value]="Requerimiento"
+                                        required
+                                    >
+                                    </kendo-dropdownlist>
+                                </label>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label>                
+                            Cliente
+                                                    <kendo-combobox (valueChange)="handleChange($event)"
+                                                        [data]="service.clientes" [textField]="'Empresa'" [valueField]="'Nit'" isRequired="true" 
+                                                        formControlName="nit_empre" [valuePrimitive]="true"
+                                                        [popupSettings]="{
+                                                        width: 350
+                                                        }"
+                                                    style="width: 350px;">                                      
+                                                    </kendo-combobox>
+                                                </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="nomusuarsolicita" class="control-label">Solicitado por</label>
+
+                        <input type="text" class="k-textbox" formControlName="nomusuarsolicita" />
+
+                        <div class="k-tooltip k-tooltip-validation" [hidden]="editForm.controls.nomusuarsolicita.valid || editForm.controls.nomusuarsolicita.pristine">
+                            Nombre usuario que solicita es requerido
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                                Prioridad
+                                <kendo-dropdownlist
+                                    formControlName="prioridad"
+                                    isRequired="true"
+                                    [data]="listprioridades"
+                                    [value]="Baja"
+                                    required
+                                >
+                                </kendo-dropdownlist>
+                            </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>  
+                                    Producto Prin
+                                    <kendo-combobox [data]="service.productosprin" [textField]="'nombre'" [valueField]="'id'" isRequired="true" 
+                                    formControlName="productoprin" [valuePrimitive]="true">
+                                    </kendo-combobox>
+                            </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>  
+                                        Modulo:
+                                        <kendo-dropdownlist [data]="modulos" [textField]="'nombre'" [valueField]="'id'" isRequired="true" [defaultItem]="{ id: null , nombre: 'Seleccione uno' }" formControlName="modulo" [valuePrimitive]="true">
+                                            </kendo-dropdownlist>                
+                                </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div *ngIf="service.usuarFb.evalua" class="form-group">
+                        <label> Evaluado
+                                                 <kendo-switch formControlName="evaluado"
+                                                    [onLabel]="'Si'"
+                                                    [offLabel]="'No'"
+                                                    ></kendo-switch>                                                            
+                                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <label>             
+                                    <!-- [defaultItem]="{ id: null , nombre: 'Seleccione uno' }"  -->
+                                                   
+                                            Asignado a
+                                            <kendo-combobox 
+                                                [data]="service.consultores" [textField]="'nombre'" [valueField]="'nombre'" isRequired="true" 
+                                                formControlName="asignadoa" [valuePrimitive]="true"
+                                                [popupSettings]="{
+                                                width: 350
+                                                }"
+                                            style="width: 350px;">                                      
+                                            </kendo-combobox>
+                                        </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label> Inicio Trabajo 
+                                                     <kendo-switch formControlName="iniciotrabajo"
+                                                        [onLabel]="'Si'"
+                                                        [offLabel]="'No'"
+                                                        ></kendo-switch>                                                            
+                                            </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="asunto" class="control-label">Asunto</label>
+
+                <input type="text" class="k-textbox" formControlName="asunto" />
+
+                <div class="k-tooltip k-tooltip-validation" [hidden]="editForm.controls.asunto.valid || editForm.controls.asunto.pristine">
+                    Asunto es requerido
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div>
+                            <label for="detalle" class="control-label">Detalle</label>
+                        </div>
+                        <!-- <textarea rows="20" cols="70" formControlName="detalle"></textarea> -->
+                        <kendo-editor formControlName="detalle"></kendo-editor>
+                        <div class="k-tooltip k-tooltip-validation" [hidden]="editForm.controls.detalle.valid || editForm.controls.detalle.pristine">
+                            Detalle es requerido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div>
+                            <label for="impacto" class="control-label">Impacto</label>
+                        </div>
+                        <!-- <textarea rows="20" cols="70" formControlName="impacto"></textarea> -->
+                        <kendo-editor formControlName="impacto"></kendo-editor>
+                        <div class="k-tooltip k-tooltip-validation" [hidden]="editForm.controls.impacto.valid || editForm.controls.impacto.pristine">
+                            Impacto es requerido
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <kendo-dialog-actions>
+            <button class="k-button" (click)="onCancel($event)">Cancelar</button>
+            <button class="k-button k-primary" [disabled]="!editForm.valid" (click)="onSave($event)">Grabar</button>
+        </kendo-dialog-actions>
+    </kendo-dialog>
+</div>

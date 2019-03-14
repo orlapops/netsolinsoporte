@@ -1,0 +1,83 @@
+
+.template {
+    display: inline-block;
+    background: rgb(116, 116, 110);
+    color: #fff;
+    text-align: left;
+    font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 60px !important;
+}
+.k-dropdown {
+    color: #337ab7   !important;
+    background-color: #eee !important;
+    border-color: #337ab7 !important;
+    width: 22.4em !important;
+    line-height: 3.5;
+    text-align: left;
+    white-space: nowrap;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    vertical-align: middle;
+    position: relative;
+    font-size: 18px !important;
+    font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+.menuts-list {
+ list-style: none;
+ margin: 0;
+ padding: 0;
+}
+.menuts-list > .item {
+ border-radius: 3px;
+ -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+ box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+ padding: 10px 0;
+ background: #fff;
+}
+.menuts-list > .item:before,
+.menuts-list > .item:after {
+ content: " ";
+ display: table;
+}
+.menuts-list > .item:after {
+ clear: both;
+}
+.menuts-list > .item:before,
+.menuts-list > .item:after {
+ content: " ";
+ display: table;
+}
+.menuts-list > .item:after {
+ clear: both;
+}
+.menuts-list .menut-img {
+ float: left;
+}
+.menuts-list .menut-img img {
+ width: 100px;
+ height: 100px;
+}
+.menuts-list .menut-info {
+ margin-left: 60px;
+}
+.menuts-list .menut-title {
+ font-weight: 600;
+}
+.menuts-list .menut-description {
+ display: block;
+ color: #999;
+ overflow: hidden;
+ white-space: nowrap;
+ text-overflow: ellipsis;
+}
+.menut-list-in-box > .item {
+ -webkit-box-shadow: none;
+ box-shadow: none;
+ border-radius: 0;
+ border-bottom: 1px solid #f4f4f4;
+}
+.menut-list-in-box > .item:last-of-type {
+ border-bottom-width: 0;
+}

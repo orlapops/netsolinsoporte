@@ -1,0 +1,38 @@
+<kendo-dialog title="{{ptitulo}}" (close)="close()" [minWidth]="350" [width]="650">
+    <div class="alert alert-danger" *ngIf="enerror">
+        {{message}}
+    </div>
+    <div *ngIf="cargando" class="text-center" style="padding-top: 60px;">
+        <!-- <img src="../../../../assets/spinner.gif"> -->
+        <img src="assets/spinner.gif">
+    </div>
+    <div class="alert alert-danger" *ngIf="enlistaerror">
+        <ul>
+            <li *ngFor="let regerror of listaerrores">
+                {{regerror.menerror}}
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <kendo-splitter-pane min="50%">
+            <kendo-tabstrip>
+                <!-- <kendo-tabstrip-tab [title]="ptitulo" [selected]="true"> -->
+                <kendo-tabstrip-tab [selected]="true">
+                    <ng-template kendoTabContent>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <solsearch #ssearchclipot placeholder="{{placeholder}}" valini={{busqueda}} (pasarDatos)="lanzarbusqueda($event) "></solsearch>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="mostrarlistaresbusqueda" class="col-md-12">
+                                <lista-netsbuscombog [filtro]="filtroabuscar" [title]="ptitulo" (evenclose)="closelistabusqueda($event)" [objeto]="objeto" [pcamporetorna]="pcamporetorna">
+                                </lista-netsbuscombog>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-tabstrip-tab>
+            </kendo-tabstrip>
+        </kendo-splitter-pane>
+    </div>
+</kendo-dialog>

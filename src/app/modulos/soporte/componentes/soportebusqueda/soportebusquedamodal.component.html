@@ -1,0 +1,52 @@
+<kendo-dialog title="{{ptitulo}}" (close)="close()" [minWidth]="350" [width]="650">
+    <div class="alert alert-danger" *ngIf="enerror">
+        {{message}}
+    </div>
+    <div *ngIf="cargando" class="text-center" style="padding-top: 60px;">
+        <!-- <img src="../../../../assets/spinner.gif"> -->
+        <img src="assets/spinner.gif">
+    </div>
+    <div class="alert alert-danger" *ngIf="enlistaerror">
+        <ul>
+            <li *ngFor="let regerror of listaerrores">
+                {{regerror.menerror}}
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <kendo-splitter-pane min="50%">
+            <kendo-tabstrip>
+                <!-- <kendo-tabstrip-tab [title]="'Cliente Potencial'" [selected]="true">
+                    <ng-template kendoTabContent>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <solsearch #ssearchclipot placeholder="Cadena a buscar en código o nombre" valini={{busqueda}} (pasarDatos)="lanzarbuscliepoten($event)"></solsearch>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="mostrarlistacliepoten" class="col-md-12">
+                                <lista-busqueda ptablab="CLIENPOTEN" paplica="21" porden="2" [filtro]="filtrocliepoten" lobjbusqueda="BUSMONICLIEPOTENCRM" title="Cliente potencial" objeto="CRMCLIENTECP01" rutamant="mantbasica/CRMCLIENTECP01/">
+                                </lista-busqueda>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-tabstrip-tab> -->
+                <kendo-tabstrip-tab [title]="'Vendedor'" [selected]="false">
+                    <ng-template kendoTabContent>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <solsearch #ssearchvendedor placeholder="Cadena a buscar en código o nombre" valini={{busqueda}} (pasarDatos)="lanzarbusvendedor($event)"></solsearch>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="mostrarlistavendedor" class="col-md-12">
+                                <lista-busqueda ptablab="VENDEDORES" paplica="0" porden="2" [filtro]="filtrovendedor" lobjbusqueda="BUSMONIPERSRUTA" title="Vendedores" objeto="CRMVENDEDOR" rutamant="mantbasica/CRMVENDEDOR/">
+                                </lista-busqueda>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-tabstrip-tab>
+            </kendo-tabstrip>
+        </kendo-splitter-pane>
+    </div>
+</kendo-dialog>

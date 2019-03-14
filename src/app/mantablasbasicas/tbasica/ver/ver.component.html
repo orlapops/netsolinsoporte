@@ -1,0 +1,54 @@
+<!-- <div *ngIf="!vparcaptura">
+    <app-header [title]="title" [subtitle]="subtitle" [rutaListado]="retornaRuta()"> </app-header>
+</div> -->
+<div class="alert alert-danger" *ngIf="enlistaerror">
+    <ul>
+        <li *ngFor="let regerror of listaerrores">
+            {{regerror.menerror}}
+        </li>
+    </ul>
+</div>
+<div>
+    <div *ngIf="resultados" class="row">
+        <form [formGroup]="tablaForm" (ngSubmit)="onSubmit()">
+            <div class="form-group" *ngFor="let field of camposform let i = index;">
+                <div *ngIf="i%2 == 0 && field.per_consultar" class="col-md-6 colautomat1">
+                    <label *ngIf="field.type != 'checkbox' && field.type != 'autonumber' && field.per_consultar" [for]="field.name" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <label *ngIf="field.type == 'checkbox' && field.type != 'autonumber' && field.per_consultar" [for]="field.name" class="form-check-label" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <input *ngIf="field.type == 'text' && field.per_consultar" [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="true" [id]="field.name">
+                    <textarea *ngIf="field.type == 'textarea' && field.per_consultar" rows="5" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="true" [id]="field.name"></textarea>
+                    <input *ngIf="field.type == 'number' && field.per_consultar" [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name">
+                    <input *ngIf="field.type == 'date' && field.per_consultar" [type]="field.type" class="form-control date" [formControlName]="field.name" [id]="field.name">
+                    <!-- <input *ngIf="field.type == 'checkbox' && field.per_consultar" type="checkbox" class="form-check-input" [formControlName]="field.name" [id]="field.name" [name]="field.name" checked> -->
+                    <kendo-switch *ngIf="field.type == 'checkbox' && field.per_consultar" [formControlName]="field.name" [id]="field.name" [onLabel]="'Si'" [offLabel]="'No'"></kendo-switch>
+                    <netscombog *ngIf="field.type == 'solcombog' && field.per_consultar" class="solcombog" (pasarDatos)="libmantab.verCombog($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniCombog(field.name,tablaForm)}}" tablabase="{{field.combtabla}}"
+                        orden="{{field.comborden}}" filtro="*" campollave="{{field.combcllave}}" esdisabled="{{true}}">
+                    </netscombog>
+                    <netslistnum *ngIf="field.type == 'netslistnum' && field.per_consultar" class="solcombog" (pasarDatos)="libmantab.verListnum($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniListnum(field.name,tablaForm)}}" opciones="{{field.options}}"
+                        esdisabled="true">
+                    </netslistnum>
+                </div>
+                <div *ngIf="i%2 != 0 && field.per_consultar" class="col-md-6 colautomat1">
+                    <label *ngIf="field.type != 'checkbox' && field.type != 'autonumber' && field.per_consultar" [for]="field.name" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <label *ngIf="field.type == 'checkbox' && field.type != 'autonumber' && field.per_consultar" [for]="field.name" class="form-check-label" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <input *ngIf="field.type == 'text' && field.per_consultar" [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="true" [id]="field.name">
+                    <textarea *ngIf="field.type == 'textarea' && field.per_consultar" rows="5" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="true" [id]="field.name"></textarea>
+                    <input *ngIf="field.type == 'number' && field.per_consultar" [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name">
+                    <input *ngIf="field.type == 'date' && field.per_consultar" [type]="field.type" class="form-control date" [formControlName]="field.name" [id]="field.name">
+                    <!-- <input *ngIf="field.type == 'checkbox' && field.per_consultar" type="checkbox" class="form-check-input" [formControlName]="field.name" [id]="field.name" [name]="field.name" checked> -->
+                    <kendo-switch *ngIf="field.type == 'checkbox' && field.per_consultar" [formControlName]="field.name" [id]="field.name" [onLabel]="'Si'" [offLabel]="'No'"></kendo-switch>
+                    <netscombog *ngIf="field.type == 'solcombog' && field.per_consultar" class="solcombog" (pasarDatos)="libmantab.verCombog($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniCombog(field.name,tablaForm)}}" tablabase="{{field.combtabla}}"
+                        orden="{{field.comborden}}" filtro="*" campollave="{{field.combcllave}}" esdisabled="{{true}}">
+                    </netscombog>
+                    <netslistnum *ngIf="field.type == 'netslistnum' && field.per_consultar" class="solcombog" (pasarDatos)="libmantab.verListnum($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniListnum(field.name,tablaForm)}}" opciones="{{field.options}}"
+                        esdisabled="true">
+                    </netslistnum>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+        <hr>
+    </div>
+</div>
+<!-- {{tablaForm.value | json}} -->

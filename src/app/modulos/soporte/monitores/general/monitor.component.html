@@ -1,0 +1,217 @@
+<div *ngIf="!vparcaptura">
+</div>
+<div class="alert alert-danger" *ngIf="enerror">
+    {{message}}
+</div>
+<div class="alert alert-danger" *ngIf="enlistaerror">
+    <ul>
+        <li *ngFor="let regerror of listaerrores">
+            {{regerror.menerror}}
+        </li>
+    </ul>
+</div>
+<div class="alert alert-success" *ngIf="!enerror && mostrarmensaje">
+    {{message}}
+</div>
+<!-- aqui ventanas modal para la adicion de otras tablas desde este modulo -->
+<!-- <mant-cliepoten ptitulo="Consultar Cliente potencial." *ngIf="consultacliepoten" (evenclose)="closeconsulta('cliepoten')" pvaparam="VPARCLIENPOTEN" pobjeto="CRMCLIENTECP01" ptipomant="C" [pid]="id_cliepoten"></mant-cliepoten> -->
+<div *ngIf="resultados" class="row">
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-sm-6 col-lg-6 netsmonibotonmentop">
+            <strong>Monitor General 
+      </strong>
+            <!-- <nets-filtroanomes (pasarAno)="filtroAno($event)" (pasarMes)="filtroMes($event)" tipo="AM" titulofiltro="Filtrar: " anoini="{{anofiltro}}" mesini="{{mesfiltro}}"></nets-filtroanomes> -->
+        </div>
+    </div>
+    <div *ngIf="cargodatos" class="row">
+        <kendo-splitter-pane>
+
+            <kendo-tabstrip>
+                <kendo-tabstrip-tab [title]="'Cotizaciones'" [selected]="true">
+                    <ng-template kendoTabContent>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div *ngIf="!esconder" class="box box-warning">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Cotizaciones Por Estado</h3>
+                                        <div class="box-tools pull-right">
+                                            <button *ngIf="collapse" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse(0)"><i class="fa fa-plus"></i></button>
+                                            <button *ngIf="!collapse" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse(0)"><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-box-tool" data-widget="remove" (click)="esconderpanel(0)"><i class="fa fa-times"></i></button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!collapse" class="box-body">
+                                        <nets-grafico titulo="Estados de las Cotizaciones" [leyendavisible]="true" style="width: 300px; height: 200px;" backgroundcolor="white" tipografico="line" formatoserie="M" formatoxy="0" [oparamgrafico]="oparamgraficocotizaven"></nets-grafico>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div *ngIf="!esconder1" class="box box-warning">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Cotizaciones Por Vendedor </h3>
+                                        <div class="box-tools pull-right">
+                                            <button *ngIf="collapse1" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse(1)"><i class="fa fa-plus"></i></button>
+                                            <button *ngIf="!collapse1" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse(1)"><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-box-tool" data-widget="remove" (click)="esconderpanel(1)"><i class="fa fa-times"></i></button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!collapse1" class="box-body">
+                                        <nets-grafico titulo="Cotizaciones por Vendedor" [leyendavisible]="true" style="width: 300px; height: 200px;" backgroundcolor="white" tipografico="pie" formatoserie="M" formatoxy="0" [oparamgrafico]="oparamgraficovenxvende"></nets-grafico>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div *ngIf="!esconder2" class="box box-success">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Cotizaciones Ganadas por Vendedor </h3>
+                                        <div class="box-tools pull-right">
+                                            <button *ngIf="collapse2" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse(2)"><i class="fa fa-plus"></i></button>
+                                            <button *ngIf="!collapse2" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse(2)"><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-box-tool" data-widget="remove" (click)="esconderpanel(2)"><i class="fa fa-times"></i></button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!collapse2" class="box-body">
+                                        <nets-grafico titulo="Cotizaciones ganadas por Vendedor" [leyendavisible]="true" style="width: 300px; height: 200px;" backgroundcolor="white" tipografico="pie" formatoserie="M" formatoxy="0" [oparamgrafico]="oparamgraficovenganxvende"></nets-grafico>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div *ngIf="!esconder3" class="box box-danger">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Cotizaciones perdidas por Vendedor </h3>
+                                        <div class="box-tools pull-right">
+                                            <button *ngIf="collapse3" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse(3)"><i class="fa fa-plus"></i></button>
+                                            <button *ngIf="!collapse3" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse(3)"><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-box-tool" data-widget="remove" (click)="esconderpanel(3)"><i class="fa fa-times"></i></button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!collapse3" class="box-body">
+                                        <nets-grafico [titulo]="ltitulocotixvend" [leyendavisible]="true" style="width: 300px; height: 200px;" backgroundcolor="white" tipografico="pie" formatoserie="M" formatoxy="0" [oparamgrafico]="oparamgraficovenperxvende"></nets-grafico>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-tabstrip-tab>
+
+                <kendo-tabstrip-tab [title]="'Metricas Mes'">
+                    <ng-template kendoTabContent>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETMES01" minimizada="NO" titulo="# Cotizaciones por Estado" color="success" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETMES02" minimizada="NO" titulo="# Cotizaciones por Asesor" color="success" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETMES03" minimizada="NO" titulo="Aprobadas Top Productos" color="warning" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETMES04" minimizada="NO" titulo="Aprobadas Top Clientes" color="warning" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETMES05" minimizada="NO" titulo="Cliente Cotizado-Facturado" color="info" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETMES06" minimizada="NO" titulo="Negadas por Cliente" color="info" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-tabstrip-tab>
+                <kendo-tabstrip-tab [title]="'Metricas Año'">
+                    <ng-template kendoTabContent>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETANO01" minimizada="NO" titulo="# Cotizaciones por Estado" color="success" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETANO02" minimizada="NO" titulo="# Cotizaciones por Asesor" color="success" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETANO03" minimizada="NO" titulo="Aprobadas Top Productos" color="warning" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETANO04" minimizada="NO" titulo="Aprobadas Top Clientes" color="warning" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETANO05" minimizada="NO" titulo="Cliente Cotizado-Facturado" color="info" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMMETANO06" minimizada="NO" titulo="Negadas por Cliente" color="info" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-tabstrip-tab>
+                <kendo-tabstrip-tab [title]="'Actividades'">
+                    <ng-template kendoTabContent>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div *ngIf="!esconder" class="box box-warning">
+                                    <div class="box-header with-border">
+
+                                        <h3 class="box-title">Seguimiento de actividades</h3>
+                                        <div class="box-tools pull-right">
+                                            <button *ngIf="collapse" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse()"><i class="fa fa-plus"></i></button>
+                                            <button *ngIf="!collapse" class="btn btn-box-tool" data-widget="collapse" (click)="conmutacollapse()"><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-box-tool" data-widget="remove" (click)="esconderpanel()"><i class="fa fa-times"></i></button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!collapse" class="box-body">
+                                        <nets-grafico titulo="Actividades" [leyendavisible]="true" style="width: 300px; height: 200px;" backgroundcolor="white" tipografico="line" formatoserie="M" formatoxy="0" [oparamgrafico]="oparamgraficollamadasven"></nets-grafico>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-tabstrip-tab>
+                <kendo-tabstrip-tab [title]="'Ventas'">
+                    <ng-template kendoTabContent>
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12 col-sm-6 col-lg-6 netsmonibotonmentop">
+                                <div class="list-group">
+                                    <a [href]="cleanURL(linkmoniventas)" class="list-group-item active">
+                                        <h6 class="list-group-item-heading">Monitor Ventas ERP</h6>
+                                        <p class="list-group-item-text">Ir al monitor de ventas completo de Netsolin</p>
+                                    </a>
+                                </div>
+                                <!-- <p class="k-block">
+                                            <li class="netsmonibotonmentop">
+                                                    <a [href]="cleanURL(linkmoniventas)">
+                                                    <strong>Monitor Ventas ERP</strong></a>
+                                            </li>
+                                        </p> -->
+                            </div>
+                            <!-- <monitor-objtabla objeto="MONTABGENCRM" minimizada="NO" titulo="Monitor" color="success" [paramobj]="paramtabgenrutas"></monitor-objtabla> -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMVENXMES" minimizada="NO" titulo="Ventas x Mes" color="success" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                            <div class="col-md-6">
+                                <monitor-objtabla objeto="MONCRMVENXVEND" minimizada="NO" titulo="Ventas x Vendedor" color="success" [paramobj]="paramtabgenrutas"></monitor-objtabla>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-tabstrip-tab>
+
+            </kendo-tabstrip>
+        </kendo-splitter-pane>
+    </div>
+</div>

@@ -1,0 +1,195 @@
+<!-- <app-header [title]="title" [subtitle]="subtitle"></app-header> -->
+<div class="alert alert-danger" *ngIf="enerror">
+    {{message}}
+</div>
+<div class="alert alert-danger" *ngIf="enlistaerror">
+    <ul>
+        <li *ngFor="let regerror of listaerrores">
+            {{regerror.menerror}}
+        </li>
+    </ul>
+</div>
+<div *ngIf="cargando" class="text-center" style="padding-top: 60px;">
+    <!-- <img src="../../../../assets/spinner.gif"> -->
+    <img src="assets/spinner.gif">
+</div>
+
+<div *ngIf="cargoConfig">
+    <p class="alert alert-warning" *ngIf="!segper_consultar">
+        No tiene derecho para consultar registros. Contacte al Administrador
+    </p>
+
+    <div *ngIf="segper_consultar && cargoConfig">
+        <div class="row">
+            <!-- <div class="col-md-1">
+      </div> -->
+            <div class="col-md-5">
+                <solsearch #ssearch placeholder="Cadena a buscar en código o nombre" valini={{busqueda}} (pasarDatos)="searchTbasica($event)"></solsearch>
+            </div>
+            <div class="col-md-1">
+                <a (click)="exportaArchivo('XLS')" id="btn-excel" name="btn-excel" class="btn btn-success float-md-right">XLS</a>
+            </div>
+            <div class="col-md-1">
+                <a (click)="exportaArchivo('PDF')" id="btn-pdf" name="btn-pdf" class="btn btn-danger float-md-right">PDF</a>
+            </div>
+            <div *ngIf="segper_adicionar" class="col-md-1">
+                <!-- <a class="btn btn-primary float-md-right" [routerLink]="['/addregtbasica', varparcaptura]">Añadir nuevo registro</a> -->
+                <a class="btn btn-primary float-md-right" [routerLink]="[retornaRuta('A'), varparcaptura]">Añadir nuevo registro</a>
+            </div>
+        </div>
+        <br>
+        <!-- <div class="row"> -->
+        <!-- <div [ngClass]="{alert-danger:enerror,alert-success:!enerror && resultados}"> -->
+        <!-- {{message}} -->
+        <!-- </div> -->
+
+        <div class="alert alert-success" *ngIf="!enerror && resultados">
+            {{message}}
+        </div>
+
+        <!-- <div> -->
+        <div *ngIf="cargando" class="text-center" style="padding-top: 60px;">
+            <img src="assets/spinner.gif">
+        </div>
+        <div *ngIf="resultados">
+            <kendo-grid [data]="gridData" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [filter]="state.filter" [sortable]="true" [pageable]="true" [filterable]="true" (dataStateChange)="dataStateChange($event)" (edit)="editClick($event)">
+                <!-- [data]="gridView"
+            (cellClick)="editClick($event)"
+
+        [height]="450"
+      [resizable]="true"
+      [sortable]="{
+            allowUnsort: allowUnsort,
+            mode: multiple ? 'multiple' : 'single'
+            }"
+          [sort]="sort"
+          (sortChange)="sortChange($event)"          -->
+
+
+                <!-- 
+      [pageSize]="pageSize"
+      (pageChange)="pageChange($event)" 
+      [skip]="skip"
+
+       [skip]="skip"
+          [pageSize]="pageSize"
+          [scrollable]="'virtual'"
+          [rowHeight]="35"
+          [height]="450"
+          (pageChange)="pageChange($event)"
+          [navigable]="true"      
+        
+        
+        [data]="aregstabla" 
+      [pageable]="true"
+      (pageChange)="pageChange($event)" 
+
+      [pageSize]="pageSize"
+      [skip]="skip"
+      [sort]="sort"
+      [sortable]="true"
+      [pageable]="true"
+      [scrollable]="'none'"   -->
+
+                <!-- [height]="410" -->
+
+                <kendo-grid-messages groupPanelEmpty="Drag here to group" noRecords="No se encontraron items para mostrar." filterContainsOperator="Contiene" filterEndsWithOperator="Termina con" filterAfterOperator="es posterior" filterAfterOrEqualOperator="es posterior o igual a"
+                    filterBeforeOperator="es anterior" filterBeforeOrEqualOperator="es anterior o igual a" filterBooleanAll="Todo" filterClearButton="Limpiar" filterEndsWithOperator="Termina con" filterEqOperator="Es igual a" filterFilterButton="Filtro" filterGtOperator="es mayor que"
+                    filterGteOperator="es mayor o igual que" filterIsEmptyOperator="Está vacío" filterIsFalse="Falso" filterIsNotEmptyOperator="no está vacío" filterIsNotNullOperator="no es nulo" filterIsNullOperator="es nulo" filterIsTrue="Verdadero" filterLtOperator="es menor que"
+                    filterLteOperator="es menor o igual que" filterNotContainsOperator="No contiene" filterNotEqOperator="No es igual a" filterStartsWithOperator="comienza con" groupPanelEmpty="Gupo Vacío" NoRecords="sin registros" pagerFirstPage="Primera página"
+                    pagerLastPage="Ultima" pagerNextPage="Siguiente" pagerPreviousPage="Anterior" pagerPage="Página" pagerOf="de" pagerItems="ítems" pagerItemsPerPage="ítems por página">
+                </kendo-grid-messages>
+                <div *ngIf="mlista_campo">
+                    <div *ngFor="let field of camposv">
+                        <kendo-grid-column field="{{field.campo}}" title="{{field.titulo}}" [sortable]="true">
+                        </kendo-grid-column>
+                    </div>
+                </div>
+
+                <kendo-grid-column *ngIf="!mlista_campo" [field]='pcampollave' title="Código" width="100" [sortable]="true">
+                </kendo-grid-column>
+                <kendo-grid-column *ngIf="!mlista_campo" [field]='pcamponombre' title="Nombre" width="250" [sortable]="true">
+
+                </kendo-grid-column>
+                <kendo-grid-command-column title="Opciones" width="120">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <i *ngIf="segper_consultar && confirmado != rowIndex" (click)="verRegK(dataItem)" class="fa fa-eye fa-lg manteconsulta" data-toggle="tooltip" title="Click para consultar el registro."></i>
+                        <i *ngIf="segper_modificar && confirmado != rowIndex" (click)="editClick(dataItem)" class="fa fa-edit fa-lg mantenimiento" data-toggle="tooltip" title="Click para modificar el registro."></i>
+                        <i *ngIf="segper_eliminar && confirmado != rowIndex" (click)="borrarConfrma(rowIndex)" class="fa fa-trash fa-lg manteelimina" data-toggle="tooltip" title="Click para eliminar el registro."></i>
+
+                        <!-- <button *ngIf="segper_consultar && confirmado != rowIndex" class="k-button btn-warning" style="background-color: #00a65a; color: #ffffff;" (click)="verRegK(dataItem)">Consultar</button>
+                <button *ngIf="segper_modificar && confirmado != rowIndex" kendoGridEditCommand class="k-primary"  style="background-color: #3c8dbc; color: #ffffff;">Editar</button>
+                <button *ngIf="segper_eliminar && confirmado != rowIndex" kendoGridRemoveCommand (click)="borrarConfrma(rowIndex)" style="background-color: #dd4b39; color: #ffffff;">Eliminar</button> -->
+                        <button *ngIf="segper_eliminar && confirmado == rowIndex" kendoGridRemoveCommand (click)="onDeleteTabla(dataItem)" style="background-color: #dd4b39; color: #ffffff;">Quiero eliminarlo</button>
+                        <button *ngIf="segper_eliminar && confirmado == rowIndex" kendoGridRemoveCommand (click)="cancelarConfirma(rowIndex)" style="background-color: #3c8dbc; color: #ffffff;">Cancelar</button>
+
+                        <!-- <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button> -->
+
+                        <!-- <div class="botones" *ngIf="confirmado != retornaValcampo(gridData.data[rowIndex],'C')">
+              <a *ngIf="segper_consultar" [routerLink]="[retornaRuta('V'),retornaValcampo(gridData.data[rowIndex],'C')]" class="btn btn-sm btn-primary">Ver</a>
+              <a *ngIf="segper_modificar" [routerLink]="[retornaRuta('E'),retornaValcampo(gridData.data[rowIndex],'C')]" class="btn btn-sm btn-warning">Editar</a>
+              <a *ngIf="segper_eliminar" (click)="borrarConfirm(retornaValcampo(gridData.data[rowIndex],'C'))" class="btn btn-sm btn-danger">Borrar</a>
+            </div>
+
+            <div class="seguro" *ngIf="confirmado == retornaValcampo(gridData.data[rowIndex],'C')">
+              <a (click)="onDeleteTabla(gridData.data[rowIndex],retornaValcampo(gridData.data[rowIndex],'C'))" class="btn btn-sm btn-danger">
+                Quiero eliminarlo
+              </a>
+              <a (click)="cancelarConfirm()" class="btn btn-xs btn-warning">Cancelar</a>
+            </div> -->
+
+
+
+                    </ng-template>
+                </kendo-grid-command-column>
+
+            </kendo-grid>
+        </div>
+
+
+        <div *ngIf="resultados && muestraverant">
+            <table class="table table-bordered table-striped tabla" style="margin-top: 40px;">
+                <thead>
+                    <tr class="filters">
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Opción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let regtabla of aregstabla">
+                        <!-- {{regtabla}} -->
+                        <!-- pcampollave:{{pcampollave}} -->
+                        <!-- pcamponombre:{{pcamponombre}} -->
+                        <td>{{ retornaValcampo(regtabla,"C") }}</td>
+                        <td>{{ retornaValcampo(regtabla,"N") }}</td>
+                        <!-- <td>{{ regtabla.nombre }}</td> -->
+                        <div class="botones" *ngIf="confirmado != retornaValcampo(regtabla,'C')">
+                            <a *ngIf="segper_consultar" [routerLink]="[retornaRuta('V'),retornaValcampo(regtabla,'C')]" class="btn btn-xs btn-primary">Ver</a>
+                            <a *ngIf="segper_modificar" [routerLink]="[retornaRuta('E'),retornaValcampo(regtabla,'C')]" class="btn btn-xs btn-warning">Editar</a>
+                            <a *ngIf="segper_eliminar" (click)="borrarConfirm(retornaValcampo(regtabla,'C'))" class="btn btn-xs btn-danger">Borrar</a>
+                        </div>
+
+                        <div class="seguro" *ngIf="confirmado == retornaValcampo(regtabla,'C')">
+                            <a (click)="onDeleteTabla(regtabla,retornaValcampo(regtabla,'C'))" class="btn btn-xs btn-danger">
+                Quiero eliminarlo
+              </a>
+                            <a (click)="cancelarConfirm()" class="btn btn-xs btn-warning">Cancelar</a>
+                        </div>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="noresultados && muestraverant">
+            <p>No existe ninguna coincidencia</p>
+        </div>
+        <kendo-dialog title="Resultado." *ngIf="eliminoreg" (close)="close()">
+            <h3 style="margin: 30px; text-align: center;">Se elimino el registro satisfactoriamente.</h3>
+
+            <kendo-dialog-actions>
+                <button kendoButton (click)="close()" [primary]="true">Cerrar.</button>
+            </kendo-dialog-actions>
+        </kendo-dialog>
+    </div>
+</div>

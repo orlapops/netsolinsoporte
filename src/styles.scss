@@ -1,0 +1,145 @@
+    // @import "~@progress/kendo-theme-default/scss/all";
+    @import "~@progress/kendo-theme-bootstrap/scss/all";
+    .divprincipal {
+        border-radius: 3px;
+        padding: 5px;
+        margin-bottom: 0px;
+        margin-bottom: 2px;
+        background-color: lightgrey;
+    }
+    
+    .divsecundaria {
+        border-radius: 3px;
+        padding: 5px;
+        margin-bottom: 0px;
+        margin-bottom: 2px;
+        background-color: #d2d6de;
+    }
+    
+    .mantenimiento {
+        color: #3c8dbc;
+    }
+    
+    .manteconsulta {
+        color: #42A948;
+    }
+    
+    .manteelimina {
+        color: #a94442;
+    }
+    
+    .k-window-titlebar {
+        // background-color: #b4d8f7 !important;
+        background-color: #b4d8f7;
+    }
+    
+    .labelrela {
+        color: #333;
+        text-align: left;
+        padding: 0px;
+        font-size: 10px;
+        display: initial; // color: #337ab7;
+        // text-align: right;
+        // padding: 5px;
+        // font-size: 12px;
+    }
+    
+    .h1,
+    .h2,
+    .h3,
+    h1,
+    h2,
+    h3 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .fieldset legend {
+        color: #051820 !important;
+        background-color: #d2d6de !important;
+        font-size: 1.5rem !important;
+    }
+    
+    .fieldset {
+        margin-bottom: 5px !important;
+    }
+    
+    .form-check-label {
+        margin-top: 30px !important;
+    }
+    
+    label {
+        margin-top: 5px !important;
+    }
+    
+    .netscoltottitulo {
+        font-size: 14px;
+        line-height: 18px;
+        color: #90949c;
+        /* margin-right: 18px; */
+        font-weight: bold;
+        display: block;
+        /* width: 180px; */
+        float: left;
+    }
+    
+    .k-switch-handle,
+    .km-switch-handle {
+        color: red !important;
+    }
+    
+    .netscoltotvalor {
+        font-size: 14px;
+        line-height: 18px;
+        color: #444;
+        /* margin-right: 18px; */
+        font-weight: bold;
+        display: block;
+        /* width: 180px; */
+        float: right;
+    }
+    /*******************
+Layouts  cambio card segun udemy en prueba
+******************/
+    
+    .card-no-border {
+        .card {
+            border: 0px;
+            border-radius: 0px;
+            box-shadow: none;
+        }
+    }
+    
+    .card-no-border .shadow-none {
+        box-shadow: none;
+    }
+    
+    .card-outline-danger,
+    .card-outline-info,
+    .card-outline-warning,
+    .card-outline-success,
+    .card-outline-primary {
+        background: $white;
+    }
+    
+    .card-fullscreen {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        overflow: auto;
+    }
+    
+    // Para modal
+    // @media (min-width: 992px) {
+    //     .col-sm-offset-1 {
+    //         margin-left: 0.33333333%;
+    //     }
+    // }
+    // @media (min-width: 992px) {
+    //     .col-md-8 {
+    //         width: 99.66666667%;
+    //     }
+    // }

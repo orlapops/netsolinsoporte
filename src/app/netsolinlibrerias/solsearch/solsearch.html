@@ -1,0 +1,22 @@
+<!-- <div class="container"> -->
+<!-- <div *ngIf="cargoConfig"> -->
+<div class="input-group">
+    <input #box (keyup.enter)="onEnter(box.value)" (blur)="box.value=''" type="text" class="form-control input-sm" maxlength="64" placeholder="{{placeholder}}" id="cbuscar" name="cbuscar" [(ngModel)]="buscar" />
+    <span class="input-group-btn">
+          <button type="button" class="btn btn-primary btn-flat" (click)="lanzarFunc($event)">Buscar</button>
+        </span>
+</div>
+
+
+<!-- <div class="searchN">
+    <input #box (keyup.enter)="onEnter(box.value)" (blur)="box.value=''" type="text" class="form-control input-sm" maxlength="64"
+      placeholder="{{placeholder}}" id="cbuscar" name="cbuscar" [(ngModel)]="buscar" />      
+    <button type="submit" class="btn btn-primary btn-sm" (click)="lanzarFunc($event)">Buscar</button>
+  </div> -->
+
+
+<!-- </div> -->
+<!-- <div class="col-md-12 inputlbsearch" *ngIf="buscar"> -->
+<!-- Termino de busqueda: <strong>{{buscar}}</strong> -->
+<!-- </div> -->
+<!-- </div> -->

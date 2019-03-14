@@ -1,0 +1,52 @@
+<div class="alert alert-danger" *ngIf="enerror">
+    {{message}}
+</div>
+<div class="alert alert-danger" *ngIf="enlistaerror">
+    <ul>
+        <li *ngFor="let regerror of listaerrores">
+            {{regerror.menerror}}
+        </li>
+    </ul>
+</div>
+<div *ngIf="cargando" class="text-center" style="padding-top: 60px;">
+    <img src="assets/spinner.gif">
+</div>
+<!-- aqui ventanas modal para la adicion de otras tablas desde este modulo -->
+<div *ngIf="cargoConfig">
+    <p class="alert alert-warning" *ngIf="!segper_consultar">
+        No tiene derecho para consultar registros. Contacte al Administrador
+    </p>
+
+    <div *ngIf="segper_consultar && cargoConfig">
+        <div *ngIf="cargando" class="text-center" style="padding-top: 60px;">
+            <img src="assets/spinner.gif">
+        </div>
+        <div *ngIf="resultados">
+            <kendo-grid [data]="gridData" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [filter]="state.filter" [sortable]="true" [pageable]="false" [filterable]="false" (dataStateChange)="dataStateChange($event)" (edit)="editClick($event)">
+                <kendo-grid-messages groupPanelEmpty="Drag here to group" noRecords="No se encontraron items para mostrar." filterContainsOperator="Contiene" filterEndsWithOperator="Termina con" filterAfterOperator="es posterior" filterAfterOrEqualOperator="es posterior o igual a"
+                    filterBeforeOperator="es anterior" filterBeforeOrEqualOperator="es anterior o igual a" filterBooleanAll="Todo" filterClearButton="Limpiar" filterEndsWithOperator="Termina con" filterEqOperator="Es igual a" filterFilterButton="Filtro" filterGtOperator="es mayor que"
+                    filterGteOperator="es mayor o igual que" filterIsEmptyOperator="Está vacío" filterIsFalse="Falso" filterIsNotEmptyOperator="no está vacío" filterIsNotNullOperator="no es nulo" filterIsNullOperator="es nulo" filterIsTrue="Verdadero" filterLtOperator="es menor que"
+                    filterLteOperator="es menor o igual que" filterNotContainsOperator="No contiene" filterNotEqOperator="No es igual a" filterStartsWithOperator="comienza con" groupPanelEmpty="Gupo Vacío" NoRecords="sin registros" pagerFirstPage="Primera página"
+                    pagerLastPage="Ultima" pagerNextPage="Siguiente" pagerPreviousPage="Anterior" pagerPage="Página" pagerOf="de" pagerItems="ítems" pagerItemsPerPage="ítems por página">
+                </kendo-grid-messages>
+                <div *ngFor="let field of camposv">
+                    <kendo-grid-column field="{{field.campo}}" title="{{field.titulo}}" format="{{field.format}}" [sortable]="true">
+                    </kendo-grid-column>
+                </div>
+                <kendo-grid-command-column title="Opciones" width="120">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <i *ngIf="segper_consultar && confirmado != rowIndex " (click)="verRegK(dataItem)" class="fa  fa-play-circle fa-lg manteconsulta" data-toggle="tooltip" title="Click para retornar este registro."></i>
+                    </ng-template>
+                </kendo-grid-command-column>
+
+            </kendo-grid>
+        </div>
+        <kendo-dialog title="Resultado." *ngIf="eliminoreg" (close)="close()">
+            <h3 style="margin: 30px; text-align: center;">Se elimino el registro satisfactoriamente.</h3>
+
+            <kendo-dialog-actions>
+                <button type="button" kendoButton (click)="close()" [primary]="true">Cerrar.</button>
+            </kendo-dialog-actions>
+        </kendo-dialog>
+    </div>
+</div>

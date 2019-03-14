@@ -1,0 +1,100 @@
+<!-- <div *ngIf="!vparcaptura">
+    <app-header [title]="title" [subtitle]="subtitle" [rutaListado]="retornaRuta()"> </app-header>
+</div> -->
+<div class="alert alert-danger" *ngIf="enerror">
+    {{message}}
+</div>
+<div class="alert alert-danger" *ngIf="enlistaerror">
+    <ul>
+        <li *ngFor="let regerror of listaerrores">
+            {{regerror.menerror}}
+        </li>
+    </ul>
+</div>
+<div class="alert alert-success" *ngIf="!enerror && grabo">
+    {{message}}
+</div>
+<div>
+    <kendo-dialog title="Resultado." *ngIf="confmodifica" (close)="close()">
+        <h3 style="margin: 30px; text-align: center;">Se modifico el registro satisfactoriamente.</h3>
+
+        <kendo-dialog-actions>
+            <button kendoButton (click)="close()" [primary]="true">Cerrar.</button>
+        </kendo-dialog-actions>
+    </kendo-dialog>
+    <div *ngIf="resultados && grabando" class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset 2">
+        <div class="alert alert-warning">
+            Grabando registro....
+            <img src="assets/spinner.gif">
+        </div>
+    </div>
+
+    <div *ngIf="resultados && !grabando" class="row">
+        <!-- <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset 2"> -->
+        <form [formGroup]="tablaForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="form-group" *ngFor="let field of camposform   let i = index; ">
+                <!-- <div class="row"> -->
+                <div *ngIf="i%2 == 0 && field.per_modificar" class="col-md-6 colautomat1">
+                    <label *ngIf="field.type != 'checkbox' && field.type != 'autonumber' " [for]="field.name" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <label *ngIf="field.type == 'checkbox' && field.type != 'autonumber' " [for]="field.name" class="form-check-label" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <i class="fa fa-check-circle check" *ngIf="field.type != 'checkbox'  && libmantab.conpropvalCampo(field.name,'valid',tablaForm)"></i>
+                    <i class="fa fa-exclamation-circle uncheck" *ngIf="field.type != 'checkbox'  && libmantab.conpropvalCampo(field.name,'invalid',tablaForm)"></i>
+                    <input *ngIf="field.type == 'text' " [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="true" [id]="field.name">
+                    <textarea *ngIf="field.type == 'textarea' " rows="5" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="true" [id]="field.name"></textarea>
+                    <input *ngIf="field.type == 'number' " [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name">
+                    <input *ngIf="field.type == 'date' " [type]="field.type" class="form-control date" [formControlName]="field.name" [id]="field.name">
+                    <!-- <input *ngIf="field.type == 'checkbox' && field.per_modificar" type="checkbox" class="form-check-input" [formControlName]="field.name" [id]="field.name" [name]="field.name" checked> -->
+                    <!-- <input *ngIf="field.type == 'checkbox' " type="checkbox" class="form-check-input" [formControlName]="field.name" [id]="field.name" [name]="field.name" checked> -->
+                    <kendo-switch *ngIf="field.type == 'checkbox'" [formControlName]="field.name" [id]="field.name" [onLabel]="'Si'" [offLabel]="'No'"></kendo-switch>
+                    <netscombog *ngIf="field.type == 'solcombog' " class="solcombog" (pasarDatos)="libmantab.verCombog($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniCombog(field.name,tablaForm)}}" tablabase="{{field.combtabla}}" orden="{{field.comborden}}"
+                        filtro="*" campollave="{{field.combcllave}}" [esdisabled]="!field.per_modificar">
+                    </netscombog>
+                    <netslistnum *ngIf="field.type == 'netslistnum'" class="solcombog" (pasarDatos)="libmantab.verListnum($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniListnum(field.name,tablaForm)}}" opciones="{{field.options}}" [esdisabled]="!field.per_modificar"></netslistnum>
+                    <p class="alert alert-danger" *ngIf="libmantab.conpropvalCampo(field.name,'invalid',tablaForm) && field.per_modificar && 
+              libmantab.conpropvalCampo(field.name,'touched',tablaForm)">
+                        {{field.mensaje_er}}
+                    </p>
+                </div>
+                <div *ngIf="i%2 != 0 && field.per_modificar" class="col-md-6 colautomat1">
+                    <label *ngIf="field.type != 'checkbox' && field.type != 'autonumber' " [for]="field.name" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <label *ngIf="field.type == 'checkbox' && field.type != 'autonumber' " [for]="field.name" class="form-check-label" data-toggle="tooltip " [title]="field.placeholder ">{{field.label}} </label>
+                    <i class="fa fa-check-circle check" *ngIf="field.type != 'checkbox'  && libmantab.conpropvalCampo(field.name,'valid',tablaForm)"></i>
+                    <i class="fa fa-exclamation-circle uncheck" *ngIf="field.type != 'checkbox'  && libmantab.conpropvalCampo(field.name,'invalid',tablaForm)"></i>
+                    <input *ngIf="field.type == 'text' " [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="true" [id]="field.name">
+                    <textarea *ngIf="field.type == 'textarea' " rows="5" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [UpperCase]="true" [id]="field.name"></textarea>
+                    <input *ngIf="field.type == 'number' " [type]="field.type" class="form-control" [formControlName]="field.name" placeholder="{{field.placeholder}}" [id]="field.name">
+                    <input *ngIf="field.type == 'date' " [type]="field.type" class="form-control date" [formControlName]="field.name" [id]="field.name">
+                    <!-- <input *ngIf="field.type == 'checkbox' && field.per_modificar" type="checkbox" class="form-check-input" [formControlName]="field.name" [id]="field.name" [name]="field.name" checked> -->
+                    <!-- <input *ngIf="field.type == 'checkbox' " type="checkbox" class="form-check-input" [formControlName]="field.name" [id]="field.name" [name]="field.name" checked> -->
+                    <kendo-switch *ngIf="field.type == 'checkbox'" [formControlName]="field.name" [id]="field.name" [onLabel]="'Si'" [offLabel]="'No'"></kendo-switch>
+                    <netscombog *ngIf="field.type == 'solcombog' " class="solcombog" (pasarDatos)="libmantab.verCombog($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniCombog(field.name,tablaForm)}}" tablabase="{{field.combtabla}}" orden="{{field.comborden}}"
+                        filtro="*" campollave="{{field.combcllave}}" [esdisabled]="!field.per_modificar">
+                    </netscombog>
+                    <netslistnum *ngIf="field.type == 'netslistnum'" class="solcombog" (pasarDatos)="libmantab.verListnum($event,field.name,field.combcllave,tablaForm)" valini="{{libmantab.valoriniListnum(field.name,tablaForm)}}" opciones="{{field.options}}" [esdisabled]="!field.per_modificar"></netslistnum>
+                    <p class="alert alert-danger" *ngIf="libmantab.conpropvalCampo(field.name,'invalid',tablaForm) && field.per_modificar && 
+                  libmantab.conpropvalCampo(field.name,'touched',tablaForm)">
+                        {{field.mensaje_er}}
+                    </p>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-5">
+                    <button type="submit" class="btn btn-primary" [disabled]="!tablaForm.valid">Guardar Cambios</button>
+                </div>
+                <div class="col-md-5" *ngIf="!vparcaptura">
+                    <a class="btn btn-danger" [routerLink]="[retornaRuta()]">Cancelar</a>
+                </div>
+            </div>
+            <p class="alert alert-warning" *ngIf="!tablaForm.valid">
+                Por favor complete todos los campos con valores validos
+            </p>
+        </form>
+        <!-- <p>Form value: {{tablaForm.value | json}}</p> -->
+        <hr>
+    </div>
+</div>
+<!-- </div> -->

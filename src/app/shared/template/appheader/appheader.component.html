@@ -1,0 +1,268 @@
+<!-- <div [innerHTML]="headerNetsolin"> -->
+<!-- <div innerHTML="{{headerNetsolin}}"> -->
+<!-- </div> -->
+<header *ngIf="cargoini" class="main-header">
+    <!-- Logo -->
+    <a href="#" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini">
+      <b>N</b>S Soportes</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg">
+      <b>Netsolin Soportes</b>
+    </span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <span class="hidden-xs label">Empresa: {{objoapp.nom_empresa}}</span>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- Messages: style can be found in dropdown.less-->
+                <li *ngIf="cargomensajes" class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="label label-success">{{pmensajes.length}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header text-center">
+                            <p class="header text-center bg-success">Tiene {{pmensajes.length}} mensajes</p>
+
+                        </li>
+                        <li>
+                            <ul class="menu">
+                                <li *ngFor="let mensaje of pmensajes">
+                                    <!-- <a innerHtml="{{hrefpru}}"> -->
+                                    <!-- <a href='#'> -->
+                                    <a [href]="cleanURL(mensaje.hrefm)">
+                                        <div class="pull-left">
+                                            <!-- <img src="assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
+                                            <img src="{{mensaje.urlimg}}" class="img-circle" alt="User Image">
+                                        </div>
+                                        <h4>
+                                            {{mensaje.publica}}
+                                            <small>
+                        <i class="fa fa-clock-o"></i> {{mensaje.fecha | date:'medium'}}</small>
+                                        </h4>
+                                        <p>{{mensaje.mensaje}}</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a [href]="cleanURL(hrefvtodo)">
+                                <strong>Ver todos los mensajes</strong></a>
+                            <!--
+              <a href='#'>
+                <strong>Ver todos los mensajes</strong>
+              </a>
+-->
+                        </li>
+                    </ul>
+                </li>
+                <!-- Alertas  -->
+                <li *ngIf="cargoalertas" class="dropdown notifications-menu">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="label label-danger">{{palertas.length}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header text-center">
+                            <p class="header text-center bg-danger">Tiene {{palertas.length}} alertas</p>
+                        </li>
+                        <li>
+                            <ul class="menu">
+                                <li *ngFor="let alerta of palertas">
+                                    <a [href]="cleanURL(alerta.hrefm)">
+                                        <div class="pull-left text-danger">
+                                            <h5>
+                                                <strong>{{alerta.modulo_ori}}
+                        </strong>
+                                                <small class="pull-right">
+                          <i class="fa fa-clock-o"></i>
+                          {{alerta.fecha_gen | date:'short'}}
+                        </small>
+                                            </h5>
+                                            <p>{{alerta.alerta}}</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a [href]="cleanURL(hrefvtodo)">
+                                <strong>Ver todas</strong>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Recordatorios -->
+                <li *ngIf="cargorecordatorio" class="dropdown notifications-menu">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-commenting-o"></i>
+                        <span class="label label-warning">{{precordatorio.length}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header text-center">
+                            <p class="header text-center bg-warning">Tiene {{precordatorio.length}} recordatorios</p>
+                        </li>
+                        <li>
+                            <ul class="menu">
+                                <li *ngFor="let recordat of precordatorio">
+                                    <a [href]="cleanURL(recordat.hrefm)">
+                                        <div class="pull-left text-warning">
+                                            <h5>
+                                                <strong>{{recordat.tipo}}
+                        </strong>
+                                                <small class="pull-right">
+                          <i class="fa fa-clock-o"></i>
+                          {{recordat.recordar | date:'short'}}
+                        </small>
+                                            </h5>
+                                            <p>{{recordat.notas1}}</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a [href]="cleanURL(hrefvtodo)">
+                                <strong>Ver todos</strong></a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Procesos -->
+                <li *ngIf="cargoprocesos" class="dropdown notifications-menu">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-gears"></i>
+                        <span class="label label-info">{{pprocesos.length}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header text-center">
+                            <p class="header text-center bg-primary">Tiene {{pprocesos.length}} procesos en curso</p>
+                        </li>
+                        <li>
+                            <ul class="menu">
+                                <li *ngFor="let proceso of pprocesos" class="label-success">
+                                    <a href='#'>
+                                        <div *ngIf="proceso.estado=='T'" class="pull-left">
+                                            <h4>
+                                                <strong>{{proceso.ltitulo}}
+                        </strong>
+                                                <p>
+                                                    <small>                        
+                          <i class="fa fa-clock-o"></i>
+                          Inicio:{{proceso.inicio | date:'short'}}
+                        </small>
+                                                </p>
+                                                <p>
+                                                    <small>                        
+                          <i class="fa fa-clock-o"></i>
+                          Termino:{{proceso.fin | date:'short'}}
+                        </small>
+                                                </p>
+                                            </h4>
+                                        </div>
+                                        <div *ngIf="proceso.estado!='T'" class="pull-left text-success bg-success">
+                                            <h5>
+                                                <p><strong>{{proceso.ltitulo}}
+                        </strong></p>
+                                                <p>
+                                                    <small class="pull-right">                        
+                          <i class="fa fa-clock-o"></i>
+                          Inicio:{{proceso.inicio | date:'short'}}
+                        </small>
+                                                </p>
+                                                <p>
+                                                    <small><i class="fa fa-battery-2"></i>
+                      Ejecutado:{{proceso.porc_eje}}%</small></p>
+                                            </h5>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <!-- solicitudes -->
+                <li *ngIf="cargosolicitudes" class="dropdown notifications-menu">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-flag-o"></i>
+                        <span class="label label-warning">{{psolicitudes.length}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header text-center">
+                            <p class="header text-center bg-warning">Tiene {{psolicitudes.length}} Solicitudes</p>
+                        </li>
+                        <li>
+                            <ul class="menu">
+                                <li *ngFor="let solicitud of psolicitudes">
+                                    <a href='#'>
+                                        <div class="pull-left text-primary">
+                                            <h5>
+                                                <strong>{{solicitud.nom_solicit}}
+                        </strong>
+                                                <small class="pull-right">
+                          <i class="fa fa-clock-o"></i>
+                          {{solicitud.fecha_gen | date:'short'}}
+                        </small>
+                                            </h5>
+                                            <p>{{solicitud.cuerpo}}</p>
+                                            <div class="progress xs">
+                                                <div class="progress-bar progress-bar-red" style="width: 100%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">20% Complete</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a [href]="cleanURL(hrefvtodo)">
+                                <strong>Ver todas</strong>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- User Account: style can be found in dropdown.less -->
+                <li *ngIf="cargousuario" class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img *ngIf="!pusuario.urlimg" src="assets/img/avatar5.png" class="user-image" alt="Imagen Usuario">
+                        <img *ngIf="pusuario.urlimg" src="{{pusuario.urlimg}}" class="user-image" alt="Imagen Usuario">
+                        <span class="hidden-xs">{{pusuario.nomusuar}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="user-header">
+                            <img *ngIf="!pusuario.urlimg" src="../assets/img/avatar5.png" class="img-circle" alt="Imagen Usuario">
+                            <img *ngIf="!pusuario.urlimg" src="{{pusuario.urlimg}}" class="img-circle" alt="Imagen Usuario">
+                            <p>
+                                <small>{{pusuario.email}}</small>
+                                <small>Clave vence: {{pusuario.vence | date:'mediumDate'}}</small>
+                            </p>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a target="_blank" href="../cambiar_clave.asp" class="btn btn-default btn-flat">Cambiar Clave</a>
+                            </div>
+                            <div class="pull-right">
+                                <a target="_self" href="../logout.wss" class="btn btn-default btn-flat">Salir</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Control Sidebar Toggle Button -->
+                <li>
+                    <a href="#" data-toggle="control-sidebar">
+                        <i class="fa fa-gears"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

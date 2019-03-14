@@ -1,0 +1,18 @@
+<!-- Asyncronico comobo -->
+<div *ngIf="cargando" class="text-center" style="padding-top: 60px;">
+  <img src="assets/spinner.gif">
+</div>
+<div *ngIf="resultados">
+  <kendo-dropdownlist #combo [data]="listItems"
+  [defaultItem]="defaultItem"
+    [valuePrimitive]="true"  [valueField]="'value'" [value]="valini" [textField]="'text'" [disabled]="esdisabled" 
+    (valueChange)="valueChange($event)" (selectionChange)="selectionChange($event)" (filterChange)="filterChange($event)" (open)="open()"
+    (close)="close()" (focus)="focus()" (blur)="blur()">
+    <ng-template kendoComboBoxItemTemplate let-dataItem>
+      <kbd class="template">{{ dataItem.value }} {{' | '+ dataItem.text }}</kbd>
+    </ng-template>
+  </kendo-dropdownlist>
+  <!-- <event-log title="Event log" [events]="events">
+  formControlName="nomcontrol" 
+      </event-log> -->
+</div>
