@@ -826,7 +826,7 @@ public VeriConsultorActualFb(idusuar){
 			return this.fbDb
 			.collection(`/incidentes`
 			,ref => ref.where('solucionado', '==', true)
-			.limit(100))
+			.limit(200).orderBy('fechasolucionado','desc'))			
 		 .valueChanges()
 		 .pipe(
 			map(actions =>

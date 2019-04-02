@@ -2,6 +2,11 @@ input[type=text] {
     width: 100%;
 }
 
+.hrefarchivo {
+    color: #3665e6;
+    cursor: pointer;
+}
+
 input[type=textarea] {
     width: 100%;
 }

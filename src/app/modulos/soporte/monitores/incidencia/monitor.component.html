@@ -295,7 +295,7 @@
                                                 </kendo-grid-column>
                                                 <kendo-grid-column field="nomarch" title="Archivo" [sortable]="true">
                                                     <ng-template kendoGridCellTemplate let-dataItem>
-                                                        {{ dataItem.nomarch }}
+                                                        <a class="hrefarchivo" target="_blank" [href]="dataItem.linkarch">  {{ dataItem.nomarch }}</a>
                                                     </ng-template>
                                                 </kendo-grid-column>
                                             </div>
