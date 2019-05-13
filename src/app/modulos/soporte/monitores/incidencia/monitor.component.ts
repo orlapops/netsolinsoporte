@@ -262,6 +262,16 @@ export class MonitorIncidenciaComponent implements OnInit {
         });
     });
   }
+  public darporleidochat(){
+    console.log('dar por leido item:',this.pticket, this.pnit_empresa,this.chatincidencias,this.chatincidencias.length);
+    //actualizar ult mensaje chat a leido
+    if (this.chatincidencias.length >0) {
+      // this.service.darleidoresumchat('I',this.pticket, this.pnit_empresa);
+        const idchatult = 'IC'+this.pnit_empresa.trim()+this.pticket;
+        this.service.darleidoresumchatFb(idchatult);
+     }  
+  }
+  
   public filterChangelog(filter: CompositeFilterDescriptor): void {
     this.filternov = filter;
     this.gridDataNov = filterBy(this.logincidencias, filter);
@@ -293,6 +303,12 @@ export class MonitorIncidenciaComponent implements OnInit {
   //Trae Log incidencia  actual firebase
   public getLogIncidencia(id: string) {
     return this.db.collection(`/incidentes/${id}/log`).valueChanges();
+  }
+  //Trae chat incidencia  actual firebase
+  public getChatincidencia(id: string) {    
+    return this.db
+    .collection(`/incidentes/${id}/chat`)
+    .valueChanges();
   }
 
   //Trae archivos incidencia  actual firebase

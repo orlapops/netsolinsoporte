@@ -3,7 +3,7 @@
     <kendo-tabstrip-tab [title]="'Información'" [selected]="true">
         <ng-template kendoTabContent> -->
 <div class="row">
-    <kendo-dialog *ngIf="active" (close)="closeForm()" [minWidth]="450" [width]="800">
+    <kendo-dialog *ngIf="active" (close)="closeForm()" [minWidth]="450" [width]="800" [height]="600">
         <kendo-dialog-titlebar>
             {{ isNew ? 'Adicionar nuevo' : 'Editar' }}
         </kendo-dialog-titlebar>

@@ -135,8 +135,14 @@ public filterChange(filter: CompositeFilterDescriptor): void {
 }
 
 public distinctPrimitive(fieldName: string): any {
+  // console.log('distinctPrimitive this.incidentespen:',this.incidentespen,fieldName);
 return distinct(this.incidentespen, fieldName).map(item => item[fieldName]);
 }
+public distinctPrimitiveCerrrados(fieldName: string): any {
+  // console.log('distinctPrimitiveCerrrados this.incidentescerrados:',this.incidentescerrados,fieldName);
+return distinct(this.incidentescerrados, fieldName).map(item => item[fieldName]);
+}
+
 public filterChangecerrados(filter: CompositeFilterDescriptor): void {
   this.filtercerrados = filter;
   this.gridDatacerrados = filterBy(this.incidentescerrados, filter);

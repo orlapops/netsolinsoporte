@@ -7,6 +7,10 @@ input[type=text] {
     cursor: pointer;
 }
 
+.enviachat {
+    padding-left: 10px;
+}
+
 input[type=textarea] {
     width: 100%;
 }

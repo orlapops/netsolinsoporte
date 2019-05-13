@@ -5,6 +5,7 @@ import { NetsolinApp } from '../../global';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NetsolinService } from '../../../services/netsolin.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-appheader',
@@ -18,10 +19,12 @@ export class AppheaderComponent implements OnInit {
   cargomensajes = false;
   cargoalertas = false;
   cargorecordatorio = false;
+  cargochatincident = false;
   cargoprocesos = false;
   cargosolicitudes = false;
   palertas = null;
   precordatorio = null;
+  pchatincident = null;
   pprocesos = null;
   psolicitudes = null;
   cargoini = false;
@@ -32,6 +35,8 @@ export class AppheaderComponent implements OnInit {
   constructor(
     private service: NetsolinService,
     private httpc: HttpClient,
+    private router: Router,
+    private activatedRouter: ActivatedRoute,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -59,9 +64,10 @@ export class AppheaderComponent implements OnInit {
       this.loadhtmlmenumessage();
       this.loadhtmlmenualert();
       this.loadhtmlmenurecordatorio();
-      this.loadhtmlmenuprocesos();
+      // this.loadhtmlmenuprocesos();
       this.loadhtmlmenusolicitudes();
       this.loadhtmlmenuusuario();
+      this.loadhtmlmenuresumchat();
     });
 
     // localStorage.setItem('FooterNetsolin',result.htmlfooter);
@@ -139,6 +145,22 @@ export class AppheaderComponent implements OnInit {
         // this.showError(error);
       });
   }
+  loadhtmlmenuresumchat() {
+    this.service.getChatResumFB()
+      .subscribe(result => {
+        console.log('trae chat resum',result);
+        this.pchatincident = result;
+        this.cargochatincident = true;
+        // console.log('palertas');
+        // console.log(this.palertas);
+      }, error => {
+        this.cargochatincident = false;
+        console.error('Error cargando chat resum',error);
+        localStorage.setItem('ErrorcargaError cargando resum chat', error.message);
+        // this.showError(error);
+      });
+  }
+
 
   loadhtmlmenuprocesos() {
     this.service.getNetsolinProcesos()
@@ -169,6 +191,17 @@ export class AppheaderComponent implements OnInit {
         // this.showError(error);
       });
   }
-
+  public monitorClick(dataItem): void {
+    console.log('monitorclick ', dataItem);
+    if (dataItem.tipo=='I'){
+      var pruta = `/monitorincidencia/${dataItem.nit_empre}/${dataItem.ticket}/`;
+      console.log("ir a monitor incidente:" + pruta);
+      this.router.navigate([pruta]);
+    } else {
+      var pruta = `/monitorrequerimiento/${dataItem.nit_empre}/${dataItem.ticket}/`;
+      console.log("ir a monitor requer:" + pruta);
+      this.router.navigate([pruta]);
+    }
+  }
 }
 

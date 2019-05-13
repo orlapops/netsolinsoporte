@@ -99,6 +99,45 @@
                         </li>
                     </ul>
                 </li>
+                <!-- Chat -->
+                <li *ngIf="cargochatincident" class="dropdown notifications-menu">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-weixin"></i>
+                        <span class="label label-danger">{{pchatincident.length}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header text-center">
+                            <p class="header text-center bg-success">Tiene {{pchatincident.length}} nuevo mensaje chat</p>
+                        </li>
+                        <li>
+                            <ul class="menu">
+                                <li *ngFor="let recordat of pchatincident">
+                                    <a (click)="monitorClick(recordat)" class="achat">
+                                        <div class="pull-left text-primary">
+                                            <small class="pull-left">
+                                                <i class="fa fa-clock-o"></i>
+                                                {{recordat.fechachat | date:'medium'}}
+                                              </small>
+                                        </div>
+                                        <div class="text-danger">
+                                            <h4 class="ticketchat">
+                                                <strong>{{recordat.tipo=='I' ? 'Incidente' : 'Requerimiento'}}: 
+                                                </strong> {{recordat.ticket}}
+                                            </h4>
+                                        </div>
+                                        <div class="text-primary">
+                                            <!-- {{monitorClick(recordat)}} -->
+                                            <!-- <a (click)="monitorClick(recordat)" title="Click para ir al caso. Evaluar, Seguir"> {{ recordat.ticket }}</a> -->
+                                            <!-- <a class="btn btn-danger" [routerLink]="[retornaRuta(recordat)]">{{recordat.ticket}}</a> -->
+
+                                            <p>{{recordat.texto}}</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
                 <!-- Recordatorios -->
                 <li *ngIf="cargorecordatorio" class="dropdown notifications-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -134,7 +173,7 @@
                         </li>
                     </ul>
                 </li>
-                <!-- Procesos -->
+                <!-- Procesos
                 <li *ngIf="cargoprocesos" class="dropdown notifications-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-gears"></i>
@@ -186,7 +225,7 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <!-- solicitudes -->
                 <li *ngIf="cargosolicitudes" class="dropdown notifications-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">

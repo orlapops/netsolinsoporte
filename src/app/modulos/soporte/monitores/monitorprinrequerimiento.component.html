@@ -177,7 +177,7 @@
                                                     <div>
                                                         <kendo-grid-column field="ticket" width="110" title="Ticket" [sortable]="true">
                                                             <ng-template kendoGridFilterMenuTemplate let-column="column" let-filter="filter" let-filterService="filterService">
-                                                                <multicheck-filter [isPrimitive]="true" [field]="column.field" [filterService]="filterService" [currentFilter]="filter" [data]="distinctPrimitive(column.field)"></multicheck-filter>
+                                                                <multicheck-filter [isPrimitive]="true" [field]="column.field" [filterService]="filterService" [currentFilter]="filter" [data]="distinctPrimitiveCerrrados(column.field)"></multicheck-filter>
                                                             </ng-template>
                                                             <ng-template kendoGridCellTemplate let-dataItem>
                                                                 <span class="clickmonitor">
@@ -187,7 +187,7 @@
                                                         </kendo-grid-column>
                                                         <kendo-grid-column field="nom_empre" title="Empresa" width="160" [sortable]="true">
                                                             <ng-template kendoGridFilterMenuTemplate let-column="column" let-filter="filter" let-filterService="filterService">
-                                                                <multicheck-filter [isPrimitive]="true" [field]="column.field" [filterService]="filterService" [currentFilter]="filter" [data]="distinctPrimitive(column.field)"></multicheck-filter>
+                                                                <multicheck-filter [isPrimitive]="true" [field]="column.field" [filterService]="filterService" [currentFilter]="filter" [data]="distinctPrimitiveCerrrados(column.field)"></multicheck-filter>
                                                             </ng-template>
                                                             <ng-template kendoGridCellTemplate let-dataItem>
                                                                 <!-- <a (routerLink)="retornaRutaCotiza(dataItem)">{{ dataItem.cod_dcotiz+' | '+dataItem.num_dcotiz+' Ver:'+dataItem.id_version }}</a> -->
@@ -198,7 +198,7 @@
 
                                                         <kendo-grid-column field="nomusuarreporta" title="Usuario" width="160" [sortable]="true">
                                                             <ng-template kendoGridFilterMenuTemplate let-column="column" let-filter="filter" let-filterService="filterService">
-                                                                <multicheck-filter [isPrimitive]="true" [field]="column.field" [filterService]="filterService" [currentFilter]="filter" [data]="distinctPrimitive(column.field)"></multicheck-filter>
+                                                                <multicheck-filter [isPrimitive]="true" [field]="column.field" [filterService]="filterService" [currentFilter]="filter" [data]="distinctPrimitiveCerrrados(column.field)"></multicheck-filter>
                                                             </ng-template>
                                                             <ng-template kendoGridCellTemplate let-dataItem>
                                                                 <a (click)="monitorClick(dataItem)">{{ dataItem.nomusuarreporta}}</a>

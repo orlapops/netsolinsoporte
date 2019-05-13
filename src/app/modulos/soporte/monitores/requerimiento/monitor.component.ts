@@ -276,6 +276,16 @@ export class MonitorRequerimientoComponent implements OnInit {
         });
     });
   }
+  public darporleidochat(){
+    console.log('dar por leido item:',this.pidrequer, this.pnit_empresa);
+    //actualizar ult mensaje chat a leido
+    if (this.chatrequerimientos.length >0){
+      // this.service.darleidoresumchat('R',this.pidrequer, this.pnit_empresa);
+      const idchatult = 'RC'+this.pnit_empresa.trim()+this.pidrequer;
+      this.service.darleidoresumchatFb(idchatult);
+    }
+  }
+
   public filterChangelog(filter: CompositeFilterDescriptor): void {
     this.filternov = filter;
     this.gridDataNov = filterBy(this.logrequerimientos, filter);

@@ -997,7 +997,75 @@ public regChatincidenteFb(incidente: any, texto: string) {
 			// console.log('save fb ', regchat);
 			 this.fbDb.collection(`/incidentes/${incidente.ticket}/chat`)
 			 .doc(idchat).set(regchat);
+					 //registro chat por incidente ultimo para alertas
+					 const idchatult = 'IN'+incidente.nit_empre.trim()+incidente.ticket;
+					 const regchatult = {
+						tipo: 'I',
+						id: idchat,
+						fecha: now,
+						cliente: false,
+						usuario: this.usuarFb.nombre,
+						texto: texto,
+						ticket: incidente.ticket,
+						nit_empre: incidente.nit_empre,
+						leido: false
+					}					
+					console.log('save chat en result fb ', regchatult);
+					 this.fbDb.collection(`/chat`)
+					 .doc(idchatult).set(regchatult);
 	}
+	public getChatnoleidosFB(ptipo,pticket,pnit_empre){
+		return this.fbDb
+		 .collection(`/chat`,ref => ref.where('nit_empre', '==', pnit_empre).where('tipo', '==', ptipo)
+			 .where("ticket","==", pticket).where("cliente","==",true))
+			.snapshotChanges()
+			.pipe(
+				map(actions =>
+					actions.map((a: any) => {
+						// console.log(a);
+						const data = a.payload.doc.data();
+						const id = a.payload.doc.id;
+						// console.log(id,data);
+						return {id}
+					})
+				)
+			 );
+	}
+	public darleidoresumchatFb(pid){
+		console.log('a acutualizar item ',pid);
+		this.fbDb.doc(`chat/${pid}`).update({leido: true});
+}
+
+	// public darleidoresumchat(ptipo,pticket,pnit_empre){
+	// 	const idchatult = ptipo+pnit_empre.trim()+pticket;
+	// 	// console.log('darleidoresumchat',idchatult);
+	// 	this.getChatnoleidosFB(ptipo,pticket,pnit_empre)
+	// 		 .subscribe((items: any) =>{
+	// 			//  console.log('items',items);
+	// 						items.forEach(job=>{
+	// 							console.log('a acutualizar item ',job,job.id);
+	// 								this.fbDb.doc(`chat/${job.id}`).update({leido: true});
+	// 						})
+	// 				});					
+	// }
+	public getChatResumFB(){
+		return this.fbDb
+		.collection(`/chat`,ref => ref
+			.where("leido","==", false).where("cliente","==",true))
+		 .valueChanges()
+		 .pipe(
+			map(actions =>
+				actions.map((a: any) => {
+					const fecha = a.fecha.toDate();
+					const fechastr = fecha.toLocaleDateString()
+					const horastr = fecha.toLocaleTimeString()
+					const fechachat = a.fecha.toDate();
+					return { fechachat, fechastr, horastr, ...a };
+			})
+		)
+	 );
+	}
+		
 	public regChatrequerimientoFb(requer: any, texto: string) {
 		//En libreria cliente maninterno siempre en falso ya que solo se maneja en lado de Netsolin
 				const now = new Date();
@@ -1021,6 +1089,22 @@ public regChatincidenteFb(incidente: any, texto: string) {
 				// console.log('save fb ', regchat);
 				 this.fbDb.collection(`/requerimientos/${requer.idrequer}/chat`)
 				 .doc(idchat).set(regchat);
+					 //registro chat por requerimiento ultimo para alertas
+					 const idchatult = 'RN'+requer.nit_empre.trim()+requer.idrequer;
+					 const regchatult = {
+						tipo: 'R',
+						id: idchat,
+						fecha: now,
+						cliente: false,
+						usuario: this.usuarFb.nombre,
+						texto: texto,
+						ticket: requer.idrequer,
+						nit_empre: requer.nit_empre,
+						leido: false
+					}					
+					console.log('save chat en result fb req ', regchatult);
+					 this.fbDb.collection(`/chat`)
+					 .doc(idchatult).set(regchatult);
 		}
 	
 public actLogincidenteFb(idlog, maninterno: boolean, incidente: any, cliente: boolean, accion: string, seguimiento: string, soluciona: boolean) {
